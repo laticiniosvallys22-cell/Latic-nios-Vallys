@@ -23,11 +23,11 @@ export default function ProductCard({ product }) {
       <article className="group relative w-full h-[395px] select-none filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] hover:drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1.5">
         {/* Main Card Body (Rounded top and bottom, but right side is shorter) */}
         <div className={cn(
-          "absolute top-0 left-0 w-full h-[96%] rounded-[24px] p-4 sm:p-5 pb-10 flex flex-col justify-between overflow-hidden",
+          "absolute top-0 left-0 w-full h-[96%] rounded-[24px] p-4 sm:p-5 pb-8 flex flex-col justify-between overflow-hidden",
           style.cardBg
         )}>
           {/* Transparent Image Container */}
-          <div className="relative aspect-square w-[calc(100%+32px)] -mx-4 sm:w-[calc(100%+40px)] sm:-mx-5 flex items-center justify-center mb-2 group-hover:scale-[1.12] transition-transform duration-300">
+          <div className="relative w-[calc(100%+32px)] -mx-4 sm:w-[calc(100%+40px)] sm:-mx-5 h-[220px] sm:h-[260px] flex items-center justify-center mb-1 group-hover:scale-[1.12] transition-transform duration-300">
             <Image
               src={product.image || "/logo.png"}
               alt={product.name}
@@ -38,7 +38,7 @@ export default function ProductCard({ product }) {
           </div>
 
           {/* Text Details (Pushed slightly up to prevent overlap with the tab) */}
-          <div className="flex flex-col items-start text-left w-full pb-8">
+          <div className="flex flex-col items-start text-left w-full pb-0">
             <span className="text-xs font-bold text-white/80 uppercase tracking-wide mb-1">
               {product.price || "Consulte"}
             </span>

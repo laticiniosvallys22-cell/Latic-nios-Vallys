@@ -120,7 +120,7 @@ export default function Footer() {
             <span>{new Date().getFullYear()} Laticínio Vallys. Todos os direitos reservados.</span>
           </div>
           <div className="mt-2 md:mt-0">
-            <span>Desenvolvido com carinho.</span>
+            <span>Desenvolvido por Franklim Melo.</span>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Bike } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getCategoryStyle } from "@/interfaces/catalog";
 
 export default function ProductCarousel({ children, category }) {
@@ -137,8 +137,59 @@ export default function ProductCarousel({ children, category }) {
           <ChevronLeft size={36} className="stroke-[3]" />
         </button>
 
-        <div className="text-[#1a1a4e] transition-transform hover:scale-110 duration-300">
-          <Bike size={36} className="stroke-[1.8]" />
+        <div className="text-[#1a1a4e] transition-transform hover:scale-110 duration-300 relative flex items-center justify-center">
+          <style>{`
+            @keyframes bike-wheel-spin {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+            @keyframes bike-body-bob {
+              0%, 100% { transform: translateY(0); }
+              50% { transform: translateY(-0.8px); }
+            }
+            .animate-wheel-rear {
+              animation: bike-wheel-spin 1s linear infinite;
+              transform-origin: 18.5px 17.5px;
+            }
+            .animate-wheel-front {
+              animation: bike-wheel-spin 1s linear infinite;
+              transform-origin: 5.5px 17.5px;
+            }
+            .animate-bike-frame {
+              animation: bike-body-bob 0.5s ease-in-out infinite;
+              transform-origin: bottom center;
+            }
+          `}</style>
+          <svg 
+            width="36" 
+            height="36" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="1.8" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          >
+            {/* Roda Traseira com Raios Animados */}
+            <g className="animate-wheel-rear">
+              <circle cx="18.5" cy="17.5" r="3.5" />
+              <line x1="18.5" y1="14" x2="18.5" y2="21" strokeWidth="1" />
+              <line x1="15" y1="17.5" x2="22" y2="17.5" strokeWidth="1" />
+            </g>
+
+            {/* Roda Dianteira com Raios Animados */}
+            <g className="animate-wheel-front">
+              <circle cx="5.5" cy="17.5" r="3.5" />
+              <line x1="5.5" y1="14" x2="5.5" y2="21" strokeWidth="1" />
+              <line x1="2" y1="17.5" x2="9" y2="17.5" strokeWidth="1" />
+            </g>
+
+            {/* Quadro e Ciclista com Leve Tremor */}
+            <g className="animate-bike-frame">
+              <circle cx="15" cy="5" r="1" />
+              <path d="M12 17.5V14l-3-3 4-3 2 3h2" />
+            </g>
+          </svg>
         </div>
 
         <button
