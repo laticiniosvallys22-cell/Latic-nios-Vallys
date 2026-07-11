@@ -14,6 +14,75 @@ import { useHighlights } from "@/hooks/useHighlights";
 import ProductCarousel from "@/components/ProductCarousel";
 import { getCategoryStyle, demoHighlights } from "@/interfaces/catalog";
 
+// Efeito de digitação real (typewriter) com cursor piscando
+const Typewriter = ({ text, speed = 55, delay = 0, onDone, showCursor = true }) => {
+  const [displayed, setDisplayed] = useState("");
+  const [typing, setTyping] = useState(false);
+  const [cursorVisible, setCursorVisible] = useState(true);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!text) return;
+    setDisplayed("");
+    setTyping(false);
+    setDone(false);
+    setCursorVisible(true);
+
+    const startTimer = setTimeout(() => {
+      setTyping(true);
+      let i = 0;
+      const interval = setInterval(() => {
+        i++;
+        setDisplayed(text.slice(0, i));
+        if (i >= text.length) {
+          clearInterval(interval);
+          setTyping(false);
+          setDone(true);
+          if (onDone) onDone();
+        }
+      }, speed);
+      return () => clearInterval(interval);
+    }, delay);
+
+    return () => clearTimeout(startTimer);
+  }, [text, speed, delay]);
+
+  // Cursor pisca enquanto digita e 3x depois de terminar, e então some
+  useEffect(() => {
+    if (!showCursor) { setCursorVisible(false); return; }
+    if (done) {
+      let blinks = 0;
+      const blinkInterval = setInterval(() => {
+        setCursorVisible((v) => !v);
+        blinks++;
+        if (blinks >= 6) {
+          clearInterval(blinkInterval);
+          setCursorVisible(false);
+        }
+      }, 400);
+      return () => clearInterval(blinkInterval);
+    }
+    // Piscar enquanto digita
+    const blinkInterval = setInterval(() => {
+      setCursorVisible((v) => !v);
+    }, 530);
+    return () => clearInterval(blinkInterval);
+  }, [done, showCursor]);
+
+  return (
+    <>
+      {displayed}
+      {showCursor && (typing || !done || cursorVisible) && (
+        <span
+          className="inline-block font-light"
+          style={{ opacity: cursorVisible ? 1 : 0, transition: "opacity 0.1s" }}
+        >
+          |
+        </span>
+      )}
+    </>
+  );
+};
 
 
 export default function Home() {
@@ -173,11 +242,11 @@ export default function Home() {
                 </div>
                 
                 <div className="space-y-1">
-                  <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white uppercase leading-none drop-shadow-sm">
-                    {slide.titleLeft}
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white uppercase leading-none drop-shadow-sm">
+                    <Typewriter key={`title-${currentSlide}`} text={slide.titleLeft} speed={50} delay={200} />
                   </h2>
-                  <span className="font-caveat text-yellow-300 text-5xl sm:text-6xl md:text-7xl tracking-wide rotate-[-2.5deg] inline-block drop-shadow-md origin-left pt-1">
-                    {slide.subtitleLeft}
+                  <span className="font-caveat text-yellow-300 text-4xl sm:text-5xl md:text-6xl tracking-wide rotate-[-2.5deg] inline-block drop-shadow-md origin-left pt-1">
+                    <Typewriter key={`sub-${currentSlide}`} text={slide.subtitleLeft} speed={45} delay={900} />
                   </span>
                 </div>
                 
