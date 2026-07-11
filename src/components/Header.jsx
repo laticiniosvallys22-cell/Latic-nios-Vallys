@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -29,28 +28,58 @@ const InstagramIcon = () => (
   </svg>
 );
 
-const FacebookIcon = () => (
-  <svg className="h-5 w-5 text-[#1877F2] fill-current transition-transform hover:scale-110" viewBox="0 0 24 24">
-    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-  </svg>
-);
-
 export default function Header() {
+  const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // "drop" = caindo de cima pra posição | "idle" = no lugar | "falling" = caindo pra baixo da tela
+  const [logoState, setLogoState] = useState("hidden");
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Dispara a animação de entrada
+  useEffect(() => {
+    setLogoState("drop");
+  }, []);
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    if (logoState === "falling") return; // Evita cliques duplos
+
+    setLogoState("falling");
+
+    // Redireciona para a página inicial
+    if (pathname !== "/") {
+      // Pequeno atraso para ver o início da animação de queda antes de mudar de página
+      setTimeout(() => {
+        router.push("/");
+      }, 350);
+    }
+  };
+
+  const handleFallEnd = () => {
+    if (logoState === "falling") {
+      // Se já estiver na página inicial, apenas faz o ciclo completo da animação
+      if (pathname === "/") {
+        setLogoState("hidden");
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setLogoState("drop");
+          });
+        });
+      }
+    }
+    if (logoState === "drop") {
+      setLogoState("idle");
+    }
+  };
 
   return (
     <header
@@ -63,25 +92,33 @@ export default function Header() {
             : "border-b border-gray-100 bg-white shadow-none"
       )}
     >
-      {/* Barra superior de cor dupla (Estilo de referência em tons de azul) */}
+      {/* Barra superior de cor dupla */}
       <div className="flex h-[6px] w-full">
         <div className="w-[30%] bg-sky-400"></div>
         <div className="w-[70%] bg-[#2d2d8e]"></div>
       </div>
 
       <div className="mx-auto flex h-[76px] md:h-[96px] max-w-7xl items-center justify-between px-6 lg:px-8">
-        {/* Logo (Esquerda) */}
-        <div className="flex w-[120px] md:w-[180px] shrink-0 justify-start items-start pt-1 md:pt-2 h-full">
-          <Link 
-            href="/" 
-            className="relative z-20 block w-[85px] md:w-[115px] h-[114px] md:h-[154px] animate-tag-swing select-none"
+        {/* Logo (Esquerda) — Cai, balança, e ao clicar cai e volta */}
+        <div className="relative flex w-[120px] md:w-[180px] shrink-0 justify-start items-start pt-1 md:pt-2 h-full">
+          <button
+            onClick={handleLogoClick}
+            onAnimationEnd={handleFallEnd}
+            className={cn(
+              "relative z-20 block w-[85px] md:w-[115px] h-[114px] md:h-[154px] select-none cursor-pointer bg-transparent border-none p-0 focus:outline-none",
+              logoState === "hidden" && "opacity-0",
+              logoState === "drop" && "animate-tag-drop",
+              logoState === "idle" && "animate-tag-swing",
+              logoState === "falling" && "animate-tag-fall",
+            )}
           >
             <img
               src="/logo-tag.png"
               alt="Logo Vallys"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain pointer-events-none"
+              draggable="false"
             />
-          </Link>
+          </button>
         </div>
 
         {/* Menu Principal (Centralizado) */}
@@ -148,8 +185,6 @@ export default function Header() {
                 <a href="https://www.instagram.com/laticiniosvallys/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon /></a>
               </div>
             </div>
-
-
           </nav>
         </div>
       )}
