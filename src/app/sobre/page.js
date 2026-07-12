@@ -109,15 +109,15 @@ export default function AboutPage() {
           {/* Destaques rápidos */}
           <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-100">
             <div className="text-center">
-              <span className="block text-2xl font-extrabold text-[#2d2d8e]">2007</span>
+              <span className="block text-2xl font-extrabold text-[#00b1f4]">2007</span>
               <span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Fundação</span>
             </div>
             <div className="text-center">
-              <span className="block text-2xl font-extrabold text-[#2d2d8e]">Lajinha</span>
+              <span className="block text-2xl font-extrabold text-[#00b1f4]">Lajinha</span>
               <span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Origem (MG)</span>
             </div>
             <div className="text-center">
-              <span className="block text-2xl font-extrabold text-[#2d2d8e]">100%</span>
+              <span className="block text-2xl font-extrabold text-[#00b1f4]">100%</span>
               <span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Qualidade</span>
             </div>
           </div>
@@ -191,7 +191,7 @@ export default function AboutPage() {
                 className="rounded-2xl border border-gray-50 bg-white p-6 shadow-xs hover:shadow-md transition-shadow duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="inline-flex items-center justify-center p-3 bg-[#2d2d8e]/5 rounded-xl text-[#2d2d8e] mb-4">
+                  <div className="inline-flex items-center justify-center p-3 bg-[#00b1f4]/5 rounded-xl text-[#00b1f4] mb-4">
                     <Icon size={22} />
                   </div>
                   <h3 className="text-lg font-bold text-foreground leading-snug">{val.title}</h3>

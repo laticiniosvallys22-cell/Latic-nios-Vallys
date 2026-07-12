@@ -22,7 +22,7 @@ const FacebookIcon = () => (
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#1a1a4e]/20 bg-[#0f0f2d] text-gray-300">
+    <footer className="border-t border-sky-300/30 bg-[#00b1f4] text-white">
       {/* Grid Principal do Rodapé */}
       <div className="mx-auto max-w-7xl grid gap-12 px-6 py-16 md:grid-cols-[1.5fr_0.8fr_0.8fr_0.9fr] lg:px-8">
         
@@ -36,12 +36,12 @@ export default function Footer() {
                 className="w-full h-full object-contain"
               />
             </Link>
-          <p className="max-w-xs text-sm leading-relaxed text-gray-400 font-medium">
-            Produtos lácteos de excelência produzidos com rigor técnico, tecnologia de ponta e aquele inconfundível sabor da fazenda direto de Minas Gerais para sua mesa.
+          <p className="max-w-xs text-sm leading-relaxed text-white/90 font-medium">
+            Produtos lácteos de excelência produtos com rigor técnico, tecnologia de ponta e aquele inconfundível sabor da fazenda direto de Minas Gerais para sua mesa.
           </p>
-                 <div className="flex gap-3">
+          <div className="flex gap-3">
             <a
-              className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 border border-white/10 text-gray-400 transition-all hover:bg-white/10 hover:text-white"
+              className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 border border-white/20 text-white transition-all hover:bg-white/20"
               href="https://www.instagram.com/laticiniosvallys/"
               target="_blank"
               rel="noopener noreferrer"
@@ -50,7 +50,7 @@ export default function Footer() {
               <InstagramIcon />
             </a>
             <a
-              className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 border border-white/10 text-gray-400 transition-all hover:bg-white/10 hover:text-white"
+              className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 border border-white/20 text-white transition-all hover:bg-white/20"
               href="https://wa.me/5533999838182"
               target="_blank"
               rel="noopener noreferrer"
@@ -64,45 +64,45 @@ export default function Footer() {
         {/* Coluna 2: Navegação */}
         <div className="space-y-4">
           <h3 className="text-base font-bold text-white uppercase tracking-wider">Navegação</h3>
-          <div className="grid gap-2 text-sm font-medium text-gray-400">
-            <Link href="/" className="hover:text-amber-400 transition-colors">Início</Link>
-            <Link href="/produtos" className="hover:text-amber-400 transition-colors">Produtos</Link>
-            <Link href="/receitas" className="hover:text-amber-400 transition-colors">Receitas</Link>
-            <Link href="/sobre" className="hover:text-amber-400 transition-colors">Sobre Nós</Link>
-            <Link href="/contato" className="hover:text-amber-400 transition-colors">Contato</Link>
+          <div className="grid gap-2 text-sm font-medium text-white/80">
+            <Link href="/" className="hover:text-white hover:underline transition-all">Início</Link>
+            <Link href="/produtos" className="hover:text-white hover:underline transition-all">Produtos</Link>
+            <Link href="/receitas" className="hover:text-white hover:underline transition-all">Receitas</Link>
+            <Link href="/sobre" className="hover:text-white hover:underline transition-all">Sobre Nós</Link>
+            <Link href="/contato" className="hover:text-white hover:underline transition-all">Contato</Link>
           </div>
         </div>
 
         {/* Coluna 3: Linhas */}
         <div className="space-y-4">
           <h3 className="text-base font-bold text-white uppercase tracking-wider">Linhas de Produtos</h3>
-          <div className="grid gap-2 text-sm font-medium text-gray-400">
-            <Link href="/produtos?cat=Leites" className="hover:text-amber-400 transition-colors">Linha Leites</Link>
-            <Link href="/produtos?cat=Queijos" className="hover:text-amber-400 transition-colors">Linha Queijos</Link>
-            <Link href="/produtos?cat=Iogurtes" className="hover:text-amber-400 transition-colors">Linha Iogurtes</Link>
-            <Link href="/produtos?cat=Manteigas" className="hover:text-amber-400 transition-colors">Linha Manteigas</Link>
-            <span className="text-gray-500 italic">E muito mais...</span>
+          <div className="grid gap-2 text-sm font-medium text-white/80">
+            <Link href="/produtos?cat=Leites" className="hover:text-white hover:underline transition-all">Linha Leites</Link>
+            <Link href="/produtos?cat=Queijos" className="hover:text-white hover:underline transition-all">Linha Queijos</Link>
+            <Link href="/produtos?cat=Iogurtes" className="hover:text-white hover:underline transition-all">Linha Iogurtes</Link>
+            <Link href="/produtos?cat=Manteigas" className="hover:text-white hover:underline transition-all">Linha Manteigas</Link>
+            <span className="text-white/60 italic">E muito mais...</span>
           </div>
         </div>
 
         {/* Coluna 4: Contato & Endereço */}
         <div className="space-y-4">
           <h3 className="text-base font-bold text-white uppercase tracking-wider">Contato</h3>
-          <div className="grid gap-4 text-sm font-medium text-gray-400">
+          <div className="grid gap-4 text-sm font-medium text-white/80">
             <span className="flex items-start gap-3">
-              <Phone size={18} className="text-amber-400 shrink-0 mt-0.5" />
-              <a href="https://wa.me/5533999838182" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              <Phone size={18} className="text-white shrink-0 mt-0.5" />
+              <a href="https://wa.me/5533999838182" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-all">
                 (33) 99983-8182
               </a>
             </span>
             <span className="flex items-start gap-3">
-              <Mail size={18} className="text-amber-400 shrink-0 mt-0.5" />
-              <a href="mailto:laticiniosvallys08@hotmail.com" className="hover:text-white transition-colors">
+              <Mail size={18} className="text-white shrink-0 mt-0.5" />
+              <a href="mailto:laticiniosvallys08@hotmail.com" className="hover:text-white hover:underline transition-all">
                 laticiniosvallys08@hotmail.com
               </a>
             </span>
             <span className="flex items-start gap-3">
-              <MapPin size={18} className="text-amber-400 shrink-0 mt-0.5" />
+              <MapPin size={18} className="text-white shrink-0 mt-0.5" />
               <span>Zona Rural, Lajinha - MG, CEP 36980-000</span>
             </span>
           </div>
@@ -110,11 +110,11 @@ export default function Footer() {
       </div>
 
       {/* Bottom Copyright e Disguised Admin Link */}
-      <div className="border-t border-white/5 bg-black/20 py-6">
-        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between px-6 lg:px-8 text-xs text-gray-500 font-medium">
+      <div className="border-t border-white/10 bg-white/5 py-6">
+        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between px-6 lg:px-8 text-xs text-white/70 font-medium">
           <div className="flex items-center">
             {/* O "©" é o botão secreto de admin com área de toque ampliada */}
-            <Link href="/admin" className="text-gray-500 hover:text-gray-500 cursor-default select-none text-base px-2 py-1 -ml-2 font-medium" aria-label="Copyright">
+            <Link href="/admin" className="text-white/70 hover:text-white/90 cursor-default select-none text-base px-2 py-1 -ml-2 font-medium" aria-label="Copyright">
               ©
             </Link>
             <span>{new Date().getFullYear()} Laticínio Vallys. Todos os direitos reservados.</span>

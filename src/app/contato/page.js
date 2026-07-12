@@ -44,7 +44,7 @@ export default function ContactPage() {
 
         <div className="mt-8 grid gap-4">
           <div className="flex items-center gap-3 text-muted">
-            <span className="grid h-10 w-10 place-items-center rounded-[8px] bg-[#2d2d8e]/10 text-[#2d2d8e]">
+            <span className="grid h-10 w-10 place-items-center rounded-[8px] bg-[#00b1f4]/10 text-[#00b1f4]">
               <Phone size={18} />
             </span>
             <a href="https://wa.me/5533999838182" target="_blank" rel="noopener noreferrer" className="hover:underline font-semibold text-gray-800">
@@ -53,7 +53,7 @@ export default function ContactPage() {
           </div>
 
           <div className="flex items-center gap-3 text-muted">
-            <span className="grid h-10 w-10 place-items-center rounded-[8px] bg-[#2d2d8e]/10 text-[#2d2d8e]">
+            <span className="grid h-10 w-10 place-items-center rounded-[8px] bg-[#00b1f4]/10 text-[#00b1f4]">
               <Mail size={18} />
             </span>
             <a href="mailto:laticiniosvallys08@hotmail.com" className="hover:underline font-semibold text-gray-800">
@@ -62,7 +62,7 @@ export default function ContactPage() {
           </div>
 
           <div className="flex items-center gap-3 text-muted">
-            <span className="grid h-10 w-10 place-items-center rounded-[8px] bg-[#2d2d8e]/10 text-[#2d2d8e]">
+            <span className="grid h-10 w-10 place-items-center rounded-[8px] bg-[#00b1f4]/10 text-[#00b1f4]">
               <InstagramIcon size={18} />
             </span>
             <a href="https://www.instagram.com/laticiniosvallys/" target="_blank" rel="noopener noreferrer" className="hover:underline font-semibold text-gray-800">
@@ -71,7 +71,7 @@ export default function ContactPage() {
           </div>
 
           <div className="flex items-center gap-3 text-muted">
-            <span className="grid h-10 w-10 place-items-center rounded-[8px] bg-[#2d2d8e]/10 text-[#2d2d8e]">
+            <span className="grid h-10 w-10 place-items-center rounded-[8px] bg-[#00b1f4]/10 text-[#00b1f4]">
               <MapPin size={18} />
             </span>
             <span className="font-semibold text-gray-800">

@@ -56,7 +56,7 @@ export default function ProductCard({ product }) {
           <button
             type="button"
             onClick={() => setShowModal(true)}
-            className="w-full h-8 flex items-center justify-center rounded-[10px] bg-[#1a1a4e] hover:bg-[#2d2d8e] text-white font-bold text-[13px] tracking-wide transition-all duration-200 cursor-pointer shadow-sm active:scale-95"
+            className="w-full h-8 flex items-center justify-center rounded-[10px] bg-[#1a1a4e] hover:bg-[#00b1f4] text-white font-bold text-[13px] tracking-wide transition-all duration-200 cursor-pointer shadow-sm active:scale-95"
           >
             Detalhes
           </button>

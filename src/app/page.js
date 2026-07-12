@@ -189,7 +189,7 @@ export default function Home() {
     <div>
       {/* HERO CAROUSEL */}
       <section 
-        className="relative bg-[#0f0f2d] overflow-hidden min-h-0 md:min-h-[calc(100vh-96px-6px)] flex flex-col md:flex-row md:items-center justify-center select-none"
+        className="relative bg-[#00b1f4] overflow-hidden min-h-0 md:min-h-[calc(100vh-96px-6px)] flex flex-col md:flex-row md:items-center justify-center select-none"
         onMouseEnter={() => setIsPlaying(false)}
         onMouseLeave={() => setIsPlaying(true)}
       >
@@ -213,7 +213,7 @@ export default function Home() {
                 priority
               />
               {/* Overlay Escuro com gradiente para contraste - somente em desktop */}
-              <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
+              <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#00b1f4]/95 via-[#00b1f4]/60 to-transparent" />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -254,7 +254,7 @@ export default function Home() {
                   <Button
                     asChild
                     size="md"
-                    className="bg-white font-semibold text-[#2d2d8e] shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 cursor-pointer"
+                    className="bg-white font-semibold text-[#00b1f4] shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 cursor-pointer"
                   >
                     <Link href="/produtos" className="flex items-center gap-2">
                       Ver produtos
@@ -361,7 +361,7 @@ export default function Home() {
           <div className="flex flex-col items-center text-center bg-white border border-dashed border-gray-200 rounded-[16px] p-10 max-w-md mx-auto">
             <Sparkles size={32} className="text-amber-500 mb-4" />
             <p className="text-muted text-sm mb-4">Nenhum produto cadastrado no catálogo.</p>
-            <Button asChild className="bg-[#2d2d8e] text-white">
+            <Button asChild className="bg-[#00b1f4] text-white">
               <Link href="/admin">Cadastrar Produtos</Link>
             </Button>
           </div>
@@ -472,15 +472,15 @@ export default function Home() {
               {/* Destaques rápidos */}
               <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-100">
                 <div className="text-center">
-                  <span className="block text-2xl font-extrabold text-[#2d2d8e]">2007</span>
+                  <span className="block text-2xl font-extrabold text-[#00b1f4]">2007</span>
                   <span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Fundação</span>
                 </div>
                 <div className="text-center">
-                  <span className="block text-2xl font-extrabold text-[#2d2d8e]">Lajinha</span>
+                  <span className="block text-2xl font-extrabold text-[#00b1f4]">Lajinha</span>
                   <span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Origem (MG)</span>
                 </div>
                 <div className="text-center">
-                  <span className="block text-2xl font-extrabold text-[#2d2d8e]">100%</span>
+                  <span className="block text-2xl font-extrabold text-[#00b1f4]">100%</span>
                   <span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Qualidade</span>
                 </div>
               </div>
@@ -535,7 +535,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="flex flex-col items-center text-center space-y-4"
             >
-              <div className="inline-flex items-center justify-center p-4 bg-[#2d2d8e]/10 rounded-full text-[#2d2d8e] transition-transform duration-300 hover:scale-110">
+              <div className="inline-flex items-center justify-center p-4 bg-[#00b1f4]/10 rounded-full text-[#00b1f4] transition-transform duration-300 hover:scale-110">
                 <Award size={24} />
               </div>
               <h3 className="font-caveat text-4xl font-bold text-[#7c1421] tracking-wide">

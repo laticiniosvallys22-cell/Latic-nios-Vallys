@@ -95,7 +95,7 @@ export default function Header() {
       {/* Barra superior de cor dupla */}
       <div className="flex h-[6px] w-full">
         <div className="w-[30%] bg-sky-400"></div>
-        <div className="w-[70%] bg-[#2d2d8e]"></div>
+        <div className="w-[70%] bg-[#00b1f4]"></div>
       </div>
 
       <div className="mx-auto flex h-[76px] md:h-[96px] max-w-7xl items-center justify-between px-6 lg:px-8">
@@ -128,8 +128,8 @@ export default function Header() {
               key={item.href}
               href={item.href}
               className={cn(
-                "rounded-[8px] px-3 py-2 text-sm font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-[#2d2d8e]",
-                pathname === item.href && "bg-blue-50 text-[#2d2d8e]",
+                "rounded-[8px] px-3 py-2 text-sm font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-[#00b1f4]",
+                pathname === item.href && "bg-blue-50 text-[#00b1f4]",
               )}
             >
               {item.label}
@@ -171,7 +171,7 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 className={cn(
                   "rounded-[8px] px-3 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50",
-                  pathname === item.href && "bg-blue-50 text-[#2d2d8e]",
+                  pathname === item.href && "bg-blue-50 text-[#00b1f4]",
                 )}
               >
                 {item.label}
