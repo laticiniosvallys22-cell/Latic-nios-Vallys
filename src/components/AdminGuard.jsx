@@ -65,8 +65,8 @@ export default function AdminGuard({ children }) {
           <CardContent className="grid gap-4">
             <p className="text-sm leading-6 text-muted">
               {user 
-                ? "Esta conta de e-mail não possui privilégios de administrador." 
-                : "Faca login com uma conta autorizada para gerenciar produtos e receitas."}
+                ? `Esta conta de e-mail não possui privilégios de administrador. (Seu UID: ${user.uid})` 
+                : "Faça login com uma conta autorizada para gerenciar produtos e receitas."}
             </p>
             <Button asChild>
               <Link href="/admin/login">
