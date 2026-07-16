@@ -429,14 +429,11 @@ export async function saveSettings(settings) {
 
 export async function getAboutImages() {
   if (!db) return [];
-  const stored = getStoredCache("vallys_aboutImages");
-  if (stored) return stored;
 
   const q = query(collection(db, "aboutImages"), orderBy("order", "asc"));
   const snapshot = await getDocs(q);
   const results = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-  storeCache("vallys_aboutImages", results);
   return results;
 }
 
@@ -447,7 +444,6 @@ export async function createAboutImage(image) {
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
-  clearStoredCache("vallys_aboutImages");
   return docRef.id;
 }
 
@@ -457,12 +453,10 @@ export async function updateAboutImage(id, data) {
     ...cleanPayload(data),
     updatedAt: serverTimestamp(),
   });
-  clearStoredCache("vallys_aboutImages");
 }
 
 export async function deleteAboutImage(id) {
   if (!db) throw new Error("Configure o Firebase.");
   await deleteDoc(doc(db, "aboutImages", id));
-  clearStoredCache("vallys_aboutImages");
 }
 

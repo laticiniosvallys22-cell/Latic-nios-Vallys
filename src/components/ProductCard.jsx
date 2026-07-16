@@ -63,14 +63,36 @@ export default function ProductCard({ product }) {
   );
 
   const renderCardStyle3 = () => (
-    <article onClick={() => setShowModal(true)} className="group flex flex-col bg-white rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-      <div className="relative w-full h-[220px] bg-gray-50 flex items-center justify-center p-4">
-        <Image src={product.image || "/logo.png"} alt={product.name} fill sizes="(max-width: 768px) 100vw, 350px" className="object-contain p-4 group-hover:scale-105 transition-transform duration-300" />
+    <article 
+      onClick={() => setShowModal(true)} 
+      className="group relative w-full h-[420px] rounded-[2rem] bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.12)] transition-all duration-500 cursor-pointer border border-gray-100 flex flex-col overflow-hidden"
+    >
+      <div className="absolute top-0 inset-x-0 h-[60%] bg-gradient-to-b from-gray-50 to-white z-0 group-hover:scale-105 transition-transform duration-700" />
+      
+      <div className="relative z-10 w-full h-[55%] flex items-center justify-center p-8 mt-4 group-hover:-translate-y-4 transition-transform duration-500 ease-out">
+        <div className="relative w-full h-full group-hover:scale-110 transition-transform duration-700">
+          <Image src={product.image || "/logo.png"} alt={product.name} fill sizes="(max-width: 768px) 100vw, 350px" className="object-contain drop-shadow-xl" />
+        </div>
       </div>
-      <div className="p-5">
-        <p className={cn("text-xs font-bold uppercase tracking-wider mb-1", style.textColor || "text-gray-500")}>{product.category}</p>
-        <h3 className="text-base font-bold text-gray-900 line-clamp-2 mb-2">{product.name}</h3>
-        <p className="text-sm font-semibold text-gray-700">{product.price || "Preço sob consulta"}</p>
+      
+      <div className="relative z-20 flex-grow bg-white px-8 pb-8 pt-4 flex flex-col justify-end">
+        <div className="flex items-center justify-between mb-3">
+          <span className={cn(
+            "text-xs font-black uppercase tracking-widest",
+            style.textColor || "text-slate-500"
+          )}>
+            {product.category}
+          </span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 rounded-full bg-[#00b1f4] text-white flex items-center justify-center shadow-md">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </span>
+        </div>
+        <h3 className="text-xl font-extrabold text-slate-900 leading-snug line-clamp-2 mb-2 group-hover:text-[#00b1f4] transition-colors duration-300">
+          {product.name}
+        </h3>
+        <p className="text-sm font-semibold text-slate-400">
+          {product.price || "Preço sob consulta"}
+        </p>
       </div>
     </article>
   );

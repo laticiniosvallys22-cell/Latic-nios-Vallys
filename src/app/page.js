@@ -186,7 +186,8 @@ export default function Home() {
         )}
       </section>
 
-      {/* SEÇÃO SOBRE */}
+      {/* SEÇÃO SOBRE (Resumo Dinâmico) */}
+      {(settings?.aboutStyle === "style1" || !settings?.aboutStyle) && (
       <section className="bg-white border-t border-gray-100">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
@@ -314,6 +315,48 @@ export default function Home() {
           </div>
         </div>
       </section>
+      )}
+
+      {settings?.aboutStyle === "style2" && (
+        <section className="bg-[#f8fafc] py-20 relative overflow-hidden border-t border-gray-100">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+              <div className="order-2 lg:order-1 space-y-6">
+                <span className="inline-block px-4 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-bold tracking-widest uppercase">Tradição & Qualidade</span>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">Laticínios Vallys</h2>
+                <p className="text-xl text-[#00b1f4] font-medium leading-relaxed">
+                  Fundado em 2007, investimos continuamente na modernização de nossa estrutura e processos.
+                </p>
+                <p className="text-slate-600 text-lg leading-relaxed">
+                  Temos orgulho de fazer parte da história de Lajinha (MG), consolidando nossa marca como referência no setor de laticínios, levando sabor e confiança em cada produto.
+                </p>
+                <Button asChild size="lg" className="mt-6 bg-[#00b1f4] hover:bg-[#009bd6] text-white rounded-full shadow-lg px-8">
+                  <Link href="/sobre">Conheça nossa história completa</Link>
+                </Button>
+              </div>
+              <div className="order-1 lg:order-2 relative h-[450px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white">
+                <Image src="/sobre.png" alt="Laticínios Vallys" fill sizes="(max-width: 1024px) 100vw, 600px" className="object-cover" />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {settings?.aboutStyle === "style3" && (
+        <section className="bg-gray-900 py-32 text-white relative overflow-hidden">
+          <div className="absolute inset-0 opacity-20"><Image src="/sobre.png" alt="Fundo Sobre" fill className="object-cover" /></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent" />
+          <div className="relative z-10 mx-auto max-w-4xl px-6 lg:px-8 text-center space-y-10">
+            <h2 className="text-5xl md:text-7xl font-serif font-bold text-amber-500 drop-shadow-xl">Nossa Essência</h2>
+            <p className="text-2xl md:text-3xl text-gray-300 font-light mx-auto leading-relaxed">
+              Uma jornada de dedicação iniciada em Lajinha (MG), com o propósito de levar o verdadeiro sabor do campo até a sua mesa.
+            </p>
+            <Button asChild size="lg" className="bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold rounded-none px-12 py-6 text-lg uppercase tracking-widest mt-8 border-2 border-amber-500 transition-all hover:bg-transparent hover:text-amber-500">
+              <Link href="/sobre">Descubra Nossa História</Link>
+            </Button>
+          </div>
+        </section>
+      )}
 
       {/* DIVISOR DE TRANSIÇÃO PARA RECEITAS */}
       <div className="w-full bg-white flex justify-center py-8 border-t border-gray-100 md:hidden">

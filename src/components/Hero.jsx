@@ -182,51 +182,66 @@ export default function Hero({ slides, heroStyle }) {
     );
   }
 
-  // STYLE 2: Split design with text on side block
+  // STYLE 2: Modern Overlap Premium Design
   if (heroStyle === "style2") {
     return (
       <section 
-        className="relative bg-white overflow-hidden min-h-0 md:min-h-[calc(100vh-96px-6px)] flex flex-col md:flex-row select-none"
+        className="relative bg-[#f8fafc] overflow-hidden min-h-[500px] md:min-h-[calc(100vh-96px)] flex items-center select-none"
         onMouseEnter={() => setIsPlaying(false)}
         onMouseLeave={() => setIsPlaying(true)}
       >
-        <div className="w-full md:w-1/2 h-[350px] md:h-auto relative z-0 order-1 md:order-2">
-          <AnimatePresence mode="wait">
-            <motion.div key={currentSlide} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="relative w-full h-full">
-              <Image src={slide.image} alt={slide.titleLeft} fill sizes="50vw" className="object-cover" priority />
-            </motion.div>
-          </AnimatePresence>
-        </div>
-        <div className="w-full md:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24 bg-gray-50 order-2 md:order-1 relative z-10">
-          <AnimatePresence mode="wait">
-            <motion.div key={currentSlide} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }} className="w-full max-w-lg space-y-6">
-              {slide.badge && (
-                <span className="inline-block bg-amber-100 text-amber-800 text-sm font-semibold px-4 py-1.5 rounded-full">
-                  {slide.badge}
-                </span>
-              )}
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
-                {slide.titleLeft}
-              </h2>
-              <p className="text-xl font-medium text-[#00b1f4]">
-                {slide.subtitleLeft}
-              </p>
-              <div className="pt-6 flex gap-4">
-                <Button asChild size="lg" className="bg-[#00b1f4] hover:bg-[#009bd6] text-white">
-                  <Link href="/produtos">Ver produtos</Link>
-                </Button>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-[#f0f7ff] to-[#e0f2fe] z-0" />
+        
+        <div className="max-w-7xl w-full mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center relative z-10 py-12 md:py-0">
           
-          <div className="absolute bottom-8 left-8 md:left-16 flex gap-3 z-30">
-            <button onClick={prevSlide} className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-200 transition-colors bg-white shadow-sm cursor-pointer">
-              <ChevronLeft size={24} className="text-gray-700" />
-            </button>
-            <button onClick={nextSlide} className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-200 transition-colors bg-white shadow-sm cursor-pointer">
-              <ChevronRight size={24} className="text-gray-700" />
-            </button>
+          <div className="w-full md:w-1/2 md:pr-12 order-2 md:order-1 relative z-20 mt-12 md:mt-0">
+            <AnimatePresence mode="wait">
+              <motion.div key={currentSlide} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.5 }} className="space-y-6">
+                {slide.badge && (
+                  <span className="inline-block bg-white text-[#00b1f4] shadow-sm tracking-widest text-xs font-bold uppercase px-4 py-2 rounded-full border border-[#00b1f4]/20">
+                    {slide.badge}
+                  </span>
+                )}
+                <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] tracking-tight">
+                  {slide.titleLeft}
+                </h2>
+                <p className="text-xl md:text-2xl text-slate-600 font-medium">
+                  {slide.subtitleLeft}
+                </p>
+                <div className="pt-6">
+                  <Button asChild size="lg" className="bg-[#00b1f4] hover:bg-[#009bd6] text-white rounded-full shadow-lg shadow-[#00b1f4]/30 px-8 h-14 text-lg">
+                    <Link href="/produtos" className="flex items-center gap-2">Ver nosso catálogo <ArrowRight size={20} /></Link>
+                  </Button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="mt-12 flex items-center gap-6">
+              <div className="flex gap-2">
+                <button onClick={prevSlide} className="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-200 flex items-center justify-center hover:bg-slate-50 hover:scale-105 transition-all text-slate-700">
+                  <ChevronLeft size={24} />
+                </button>
+                <button onClick={nextSlide} className="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-200 flex items-center justify-center hover:bg-slate-50 hover:scale-105 transition-all text-slate-700">
+                  <ChevronRight size={24} />
+                </button>
+              </div>
+              <div className="flex gap-2">
+                {slides.map((_, index) => (
+                  <button key={index} onClick={() => setCurrentSlide(index)} className={`h-2.5 rounded-full transition-all ${currentSlide === index ? "w-10 bg-[#00b1f4]" : "w-2.5 bg-slate-300 hover:bg-slate-400"}`} />
+                ))}
+              </div>
+            </div>
           </div>
+
+          <div className="w-full md:w-1/2 h-[350px] sm:h-[450px] md:h-[600px] order-1 md:order-2 relative">
+             <div className="absolute inset-0 bg-gradient-to-tr from-[#00b1f4]/30 to-amber-300/30 rounded-[2.5rem] transform rotate-3 scale-105 blur-xl z-0" />
+             <AnimatePresence mode="wait">
+               <motion.div key={currentSlide} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="relative w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white z-10 bg-white">
+                 <Image src={slide.image} alt={slide.titleLeft} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" priority />
+               </motion.div>
+             </AnimatePresence>
+          </div>
+
         </div>
       </section>
     );
