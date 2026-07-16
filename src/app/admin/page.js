@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpen, Boxes, LogOut, Sparkles } from "lucide-react";
+import { BookOpen, Boxes, LogOut, Sparkles, Settings, ImageIcon } from "lucide-react";
 import AdminGuard from "@/components/AdminGuard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,7 +24,7 @@ export default function AdminPage() {
           </Button>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -72,6 +72,40 @@ export default function AdminPage() {
               </p>
               <Button asChild>
                 <Link href="/admin/destaques">Gerenciar destaques</Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Settings size={22} />
+                Configurações
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <p className="text-sm leading-6 text-muted">
+                Personalize a aparência, estilos e fontes do site.
+              </p>
+              <Button asChild>
+                <Link href="/admin/configuracoes">Abrir configurações</Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <ImageIcon size={22} className="text-emerald-500" />
+                Sobre (Carrossel)
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <p className="text-sm leading-6 text-muted">
+                Gerencie as imagens do carrossel na página Sobre.
+              </p>
+              <Button asChild>
+                <Link href="/admin/sobre">Gerenciar imagens</Link>
               </Button>
             </CardContent>
           </Card>

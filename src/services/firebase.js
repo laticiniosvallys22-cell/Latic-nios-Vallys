@@ -4,6 +4,7 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   orderBy,
@@ -394,5 +395,74 @@ export async function saveCandidate(candidate) {
     ...cleanPayload(candidate),
     createdAt: serverTimestamp(),
   });
+}
+
+/**
+ * Obtém as configurações globais do site do Firestore.
+ */
+export async function getSettings() {
+  if (!db) {
+    return null;
+  }
+  try {
+    const docRef = doc(db, "settings", "general");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    }
+    return null;
+  } catch (error) {
+    console.error("Erro ao buscar configurações:", error);
+    return null;
+  }
+}
+
+export async function saveSettings(settings) {
+  if (!db) {
+    throw new Error("Configure o Firebase para salvar configurações.");
+  }
+  const docRef = doc(db, "settings", "general");
+  await setDoc(docRef, cleanPayload(settings), { merge: true });
+}
+
+// ─── About Images ─────────────────────────────────────────────────────
+
+export async function getAboutImages() {
+  if (!db) return [];
+  const stored = getStoredCache("vallys_aboutImages");
+  if (stored) return stored;
+
+  const q = query(collection(db, "aboutImages"), orderBy("order", "asc"));
+  const snapshot = await getDocs(q);
+  const results = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+  storeCache("vallys_aboutImages", results);
+  return results;
+}
+
+export async function createAboutImage(image) {
+  if (!db) throw new Error("Configure o Firebase.");
+  const docRef = await addDoc(collection(db, "aboutImages"), {
+    ...cleanPayload(image),
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+  clearStoredCache("vallys_aboutImages");
+  return docRef.id;
+}
+
+export async function updateAboutImage(id, data) {
+  if (!db) throw new Error("Configure o Firebase.");
+  await updateDoc(doc(db, "aboutImages", id), {
+    ...cleanPayload(data),
+    updatedAt: serverTimestamp(),
+  });
+  clearStoredCache("vallys_aboutImages");
+}
+
+export async function deleteAboutImage(id) {
+  if (!db) throw new Error("Configure o Firebase.");
+  await deleteDoc(doc(db, "aboutImages", id));
+  clearStoredCache("vallys_aboutImages");
 }
 

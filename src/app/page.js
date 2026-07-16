@@ -13,82 +13,13 @@ import { useRecipes } from "@/hooks/useRecipes";
 import { useHighlights } from "@/hooks/useHighlights";
 import ProductCarousel from "@/components/ProductCarousel";
 import { getCategoryStyle, demoHighlights, productCategories } from "@/interfaces/catalog";
-
-// Efeito de digitação real (typewriter) com cursor piscando
-const Typewriter = ({ text, speed = 55, delay = 0, onDone, showCursor = true }) => {
-  const [displayed, setDisplayed] = useState("");
-  const [typing, setTyping] = useState(false);
-  const [cursorVisible, setCursorVisible] = useState(true);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    if (!text) return;
-    setDisplayed("");
-    setTyping(false);
-    setDone(false);
-    setCursorVisible(true);
-
-    const startTimer = setTimeout(() => {
-      setTyping(true);
-      let i = 0;
-      const interval = setInterval(() => {
-        i++;
-        setDisplayed(text.slice(0, i));
-        if (i >= text.length) {
-          clearInterval(interval);
-          setTyping(false);
-          setDone(true);
-          if (onDone) onDone();
-        }
-      }, speed);
-      return () => clearInterval(interval);
-    }, delay);
-
-    return () => clearTimeout(startTimer);
-  }, [text, speed, delay]);
-
-  // Cursor pisca enquanto digita e 3x depois de terminar, e então some
-  useEffect(() => {
-    if (!showCursor) { setCursorVisible(false); return; }
-    if (done) {
-      let blinks = 0;
-      const blinkInterval = setInterval(() => {
-        setCursorVisible((v) => !v);
-        blinks++;
-        if (blinks >= 6) {
-          clearInterval(blinkInterval);
-          setCursorVisible(false);
-        }
-      }, 400);
-      return () => clearInterval(blinkInterval);
-    }
-    // Piscar enquanto digita
-    const blinkInterval = setInterval(() => {
-      setCursorVisible((v) => !v);
-    }, 530);
-    return () => clearInterval(blinkInterval);
-  }, [done, showCursor]);
-
-  return (
-    <>
-      {displayed}
-      {showCursor && (typing || !done || cursorVisible) && (
-        <span
-          className="inline-block font-light"
-          style={{ opacity: cursorVisible ? 1 : 0, transition: "opacity 0.1s" }}
-        >
-          |
-        </span>
-      )}
-    </>
-  );
-};
+import { useSettings } from "@/contexts/SettingsContext";
+import Hero from "@/components/Hero";
 
 
 export default function Home() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const autoplayTimer = useRef(null);
+  const { settings } = useSettings();
+
   
   const recipeScrollRef = useRef(null);
   const [activeRecipeIndex, setActiveRecipeIndex] = useState(0);
@@ -137,42 +68,11 @@ export default function Home() {
     }
   }, [products]);
 
-  useEffect(() => {
-    if (currentSlide >= slides.length) {
-      setCurrentSlide(0);
-    }
-  }, [slides, currentSlide]);
-
   const toggleCategory = (category) => {
     setExpandedCategories((prev) => ({
       ...prev,
       [category]: !prev[category],
     }));
-  };
-
-  const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  }, [slides.length]);
-
-  const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  }, [slides.length]);
-
-  useEffect(() => {
-    if (isPlaying) {
-      autoplayTimer.current = setInterval(nextSlide, 6000);
-    }
-    return () => {
-      if (autoplayTimer.current) clearInterval(autoplayTimer.current);
-    };
-  }, [isPlaying, nextSlide]);
-
-  const slide = slides[currentSlide] || {
-    image: "/logo.png",
-    titleLeft: "",
-    subtitleLeft: "",
-    textRight: "",
-    badge: "",
   };
 
   // Group products by category
@@ -193,131 +93,8 @@ export default function Home() {
 
   return (
     <div>
-      {/* HERO CAROUSEL */}
-      <section 
-        className="relative bg-[#00b1f4] overflow-hidden min-h-0 md:min-h-[calc(100vh-96px-6px)] lg:min-h-[calc(100vh-172px)] flex flex-col md:flex-row md:items-center justify-center select-none"
-        onMouseEnter={() => setIsPlaying(false)}
-        onMouseLeave={() => setIsPlaying(true)}
-      >
-        {/* Imagem do Slide: No mobile fica no topo (relativa), no desktop vira fundo (absoluta) */}
-        <div className="w-full relative h-[380px] xs:h-[420px] sm:h-[480px] md:absolute md:inset-0 md:w-full md:h-full z-0 overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.7 }}
-              className="relative w-full h-full"
-            >
-              <Image
-                src={slide.image}
-                alt={slide.titleLeft}
-                fill
-                sizes="100vw"
-                className="object-cover"
-                priority
-              />
-
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Grade de fundo moderna e sutil por cima da imagem */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-10" />
-
-        {/* Slides Content */}
-        <div className="relative z-10 w-full h-full pt-[20px] md:absolute md:inset-0 pb-16 md:pb-24 px-0 md:px-12 lg:px-16 max-w-[1440px] mx-auto flex items-center md:items-end">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              className="w-full flex flex-col md:items-start"
-            >
-              {/* Informações e Ação */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-left w-full space-y-3 md:space-y-5 z-10 flex flex-col items-start px-6 pb-16 md:p-0 md:max-w-xl"
-              >
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-                  <Sparkles size={12} className="text-yellow-300 fill-yellow-300 animate-pulse" />
-                  {slide.badge}
-                </div>
-                
-                <div className="space-y-1">
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white uppercase leading-none drop-shadow-sm">
-                    <Typewriter key={`title-${currentSlide}`} text={slide.titleLeft} speed={50} delay={200} showCursor={false} />
-                  </h2>
-                  <span className="font-caveat text-yellow-300 text-4xl sm:text-5xl md:text-6xl tracking-wide rotate-[-2.5deg] inline-block drop-shadow-md origin-left pt-1">
-                    <Typewriter key={`sub-${currentSlide}`} text={slide.subtitleLeft} speed={45} delay={900} showCursor={false} />
-                  </span>
-                </div>
-                
-                <div className="pt-2 md:pt-4 flex flex-wrap gap-3">
-                  <Button
-                    asChild
-                    size="md"
-                    className="bg-white font-semibold text-[#00b1f4] shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 cursor-pointer"
-                  >
-                    <Link href="/produtos" className="flex items-center gap-2">
-                      Ver produtos
-                      <ArrowRight size={16} />
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    size="md"
-                    className="border border-white/30 bg-white/10 text-white backdrop-blur hover:bg-white/20 hover:scale-105 transition-all duration-200 cursor-pointer"
-                  >
-                    <Link href="/receitas">Explorar receitas</Link>
-                  </Button>
-                </div>
-              </motion.div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Setas de navegação (Estilo minimalista Dallora com fundo translúcido no mobile) */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            prevSlide();
-          }}
-          className="absolute left-4 md:left-6 top-[135px] sm:top-[180px] md:top-1/2 z-30 -translate-y-1/2 bg-black/25 md:bg-transparent backdrop-blur-xs md:backdrop-blur-none p-1 md:p-0 rounded-full text-white/70 hover:text-white hover:scale-110 active:scale-95 transition-all pointer-events-auto cursor-pointer"
-          aria-label="Slide anterior"
-        >
-          <ChevronLeft size={36} className="stroke-[1.5] md:w-[48px] md:h-[48px]" />
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            nextSlide();
-          }}
-          className="absolute right-4 md:right-6 top-[135px] sm:top-[180px] md:top-1/2 z-30 -translate-y-1/2 bg-black/25 md:bg-transparent backdrop-blur-xs md:backdrop-blur-none p-1 md:p-0 rounded-full text-white/70 hover:text-white hover:scale-110 active:scale-95 transition-all pointer-events-auto cursor-pointer"
-          aria-label="Próximo slide"
-        >
-          <ChevronRight size={36} className="stroke-[1.5] md:w-[48px] md:h-[48px]" />
-        </button>
-
-        {/* Indicadores (Dots) */}
-        <div className="absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 gap-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={(e) => {
-                e.stopPropagation();
-                setCurrentSlide(index);
-              }}
-              className={`h-2.5 rounded-full cursor-pointer transition-all duration-300 ${
-                currentSlide === index ? "w-8 bg-yellow-300" : "w-2.5 bg-white/40 hover:bg-white/60"
-              }`}
-              aria-label={`Ir para slide ${index + 1}`}
-            />
-          ))}
-        </div>
-      </section>
+      {/* HERO CAROUSEL COMPONENT */}
+      <Hero slides={slides} heroStyle={settings?.heroStyle} />
 
       {/* SEÇÃO DE LINHAS DE PRODUTOS */}
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">

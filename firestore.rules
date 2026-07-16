@@ -32,6 +32,18 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin(); // Apenas administradores autenticados podem visualizar ou gerenciar currículos
     }
 
+    // Regras para a coleção de Settings (Configurações Dinâmicas)
+    match /settings/{settingId} {
+      allow read: if true; // Visitantes precisam ler as configurações
+      allow write: if isAdmin(); // Apenas admin pode alterar as configurações
+    }
+
+    // Regras para o carrossel da página Sobre
+    match /aboutImages/{imageId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // Bloqueia qualquer outra rota/documento não especificado por padrão
     match /{document=**} {
       allow read, write: if false;

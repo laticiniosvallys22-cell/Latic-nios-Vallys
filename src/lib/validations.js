@@ -52,3 +52,8 @@ export const candidateSchema = z.object({
   message: z.string().min(10, "Escreva uma breve mensagem de apresentação (mínimo 10 caracteres)."),
 });
 
+export const aboutImageSchema = z.object({
+  title: z.string().optional(),
+  image: z.string().url("Use uma URL válida.").optional().or(z.literal("")),
+  imageFile: z.any().optional(),
+});
