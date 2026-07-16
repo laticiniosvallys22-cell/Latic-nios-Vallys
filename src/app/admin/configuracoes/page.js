@@ -55,7 +55,7 @@ export default function ConfiguracoesPage() {
 
   return (
     <AdminGuard>
-      <section className="mx-auto max-w-4xl px-6 py-14 lg:px-8">
+      <section className="mx-auto max-w-4xl px-6 py-14 lg:px-8 overflow-x-hidden">
         <div className="mb-8 flex items-center gap-4">
           <Button variant="ghost" size="icon" asChild>
             <Link href="/admin">
@@ -253,11 +253,11 @@ export default function ConfiguracoesPage() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4 mt-4">
-            <Button variant="outline" size="lg" onClick={() => window.location.reload()} disabled={saving}>
+          <div className="flex flex-col sm:flex-row justify-end gap-4 mt-4">
+            <Button variant="outline" size="lg" onClick={() => window.location.reload()} disabled={saving} className="w-full sm:w-auto">
               Cancelar / Descartar
             </Button>
-            <Button size="lg" onClick={handleSave} disabled={saving} className="bg-[#00b1f4] hover:bg-[#009bd6] text-white">
+            <Button size="lg" onClick={handleSave} disabled={saving} className="w-full sm:w-auto bg-[#00b1f4] hover:bg-[#009bd6] text-white">
               {saving ? "Salvando..." : (
                 <>
                   <Save className="mr-2" size={20} />
