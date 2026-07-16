@@ -14,8 +14,10 @@ import {
   Eye 
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useSettings } from "@/contexts/SettingsContext";
+import { useState, useEffect } from "react";
+import { useAboutImages } from "@/hooks/useAboutImages";
 import { cn } from "@/lib/utils";
 import AboutImageCarousel from "@/components/AboutImageCarousel";
 
@@ -34,11 +36,30 @@ export default function AboutPage() {
   const { settings } = useSettings();
   const style = settings?.aboutStyle || "style1";
 
+  const { images } = useAboutImages();
+  const [currentAboutIdx, setCurrentAboutIdx] = useState(0);
+
+  useEffect(() => {
+    if (!images || images.length === 0) return;
+    const interval = setInterval(() => {
+      setCurrentAboutIdx((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [images]);
+
+  const activeAboutImage = images && images.length > 0 
+    ? images[currentAboutIdx].image 
+    : "https://images.unsplash.com/photo-1596562095874-56b0932c028e?q=80&w=1200&auto=format&fit=crop";
+
   const renderStyle1 = () => (
     <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
       <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
         <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="relative overflow-hidden rounded-2xl shadow-xl aspect-[4/3] group">
-          <Image src="/sobre.png" alt="Equipe e Fábrica Laticínios Vallys" fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 600px" priority />
+          <AnimatePresence mode="wait">
+            <motion.div key={activeAboutImage} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0">
+              <Image src={activeAboutImage} alt="Equipe e Fábrica Laticínios Vallys" fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 600px" priority />
+            </motion.div>
+          </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
         </motion.div>
         <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.15 }} className="space-y-6">
@@ -48,8 +69,8 @@ export default function AboutPage() {
             <div className="h-[4px] w-[80px] bg-[#7c1421] rounded-full"></div>
           </div>
           <div className="space-y-4 text-base leading-relaxed text-muted font-medium">
-            <p>Fundado em 2007, o Laticínios Vallys vem, desde então, investindo continuamente na modernização de sua estrutura, na inovação de seus processos e na utilização de equipamentos de alta tecnologia. Nosso compromisso é oferecer produtos de excelência, levando aos consumidores qualidade, sabor e confiança em cada produto.</p>
-            <p>Temos orgulho de fazer parte da história de Lajinha (MG), contribuindo para o desenvolvimento da região e consolidando nossa marca como referência no setor de laticínios.</p>
+            <p>{settings?.aboutHistoryText1 || "Fundado em 2007, o Laticínios Vallys vem, desde então, investindo continuamente na modernização de sua estrutura, na inovação de seus processos e na utilização de equipamentos de alta tecnologia. Nosso compromisso é oferecer produtos de excelência, levando aos consumidores qualidade, sabor e confiança em cada produto."}</p>
+            <p>{settings?.aboutHistoryText2 || "Temos orgulho de fazer parte da história de Lajinha (MG), contribuindo para o desenvolvimento da região e consolidando nossa marca como referência no setor de laticínios."}</p>
           </div>
           <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-100">
             <div className="text-center"><span className="block text-2xl font-extrabold text-[#00b1f4]">2007</span><span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Fundação</span></div>
@@ -62,11 +83,11 @@ export default function AboutPage() {
       <div className="mt-24 grid gap-8 md:grid-cols-2">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm hover:shadow-md transition-shadow duration-300 space-y-4">
           <div className="flex items-center gap-3"><div className="inline-flex items-center justify-center p-3 bg-amber-500/10 rounded-xl text-amber-500"><Target size={24} /></div><h2 className="text-2xl font-bold text-foreground">Missão</h2></div>
-          <p className="text-muted leading-relaxed font-medium">Produzir alimentos lácteos com excelência, segurança e qualidade, proporcionando aos nossos consumidores uma experiência única de sabor e confiança. Atuamos de forma ética e responsável, fortalecendo parcerias duradouras com nossos produtores e valorizando nossos colaboradores por meio do desenvolvimento profissional, pessoal e humano, contribuindo para o crescimento de todos que fazem parte da nossa história.</p>
+          <p className="text-muted leading-relaxed font-medium">{settings?.aboutMission || "Produzir alimentos lácteos com excelência, segurança e qualidade, proporcionando aos nossos consumidores uma experiência única de sabor e confiança. Atuamos de forma ética e responsável, fortalecendo parcerias duradouras com nossos produtores e valorizando nossos colaboradores por meio do desenvolvimento profissional, pessoal e humano, contribuindo para o crescimento de todos que fazem parte da nossa história."}</p>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.15 }} className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm hover:shadow-md transition-shadow duration-300 space-y-4">
           <div className="flex items-center gap-3"><div className="inline-flex items-center justify-center p-3 bg-blue-500/10 rounded-xl text-blue-500"><Eye size={24} /></div><h2 className="text-2xl font-bold text-foreground">Visão</h2></div>
-          <p className="text-muted leading-relaxed font-medium">Ser referência como uma das principais indústrias de laticínios de Minas Gerais e região, destacando-se pela qualidade dos nossos produtos, inovação, eficiência na gestão e compromisso com a satisfação dos clientes. Buscamos também valorizar nossos colaboradores e manter relações sólidas, justas e confiáveis com os produtores rurais da nossa região.</p>
+          <p className="text-muted leading-relaxed font-medium">{settings?.aboutVision || "Ser referência como uma das principais indústrias de laticínios de Minas Gerais e região, destacando-se pela qualidade dos nossos produtos, inovação, eficiência na gestão e compromisso com a satisfação dos clientes. Buscamos também valorizar nossos colaboradores e manter relações sólidas, justas e confiáveis com os produtores rurais da nossa região."}</p>
         </motion.div>
       </div>
 
@@ -107,7 +128,11 @@ export default function AboutPage() {
       <div className="relative mb-24">
         <div className="absolute inset-0 bg-amber-50 rounded-[3rem] -z-10 transform -rotate-1"></div>
         <div className="relative h-[400px] w-full rounded-[2rem] overflow-hidden shadow-2xl">
-          <Image src="/sobre.png" alt="Laticínios Vallys" fill className="object-cover" />
+          <AnimatePresence mode="wait">
+            <motion.div key={activeAboutImage} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0">
+              <Image src={activeAboutImage} alt="Laticínios Vallys" fill className="object-cover" />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
 
@@ -115,12 +140,12 @@ export default function AboutPage() {
         <div className="bg-white p-10 rounded-3xl shadow-lg border border-gray-100 relative overflow-hidden">
           <div className="absolute -right-6 -top-6 text-amber-500/10"><Target size={120} /></div>
           <h2 className="text-3xl font-bold mb-6 text-amber-600 relative z-10">Missão</h2>
-          <p className="text-gray-600 leading-relaxed text-lg relative z-10">Produzir alimentos lácteos com excelência, segurança e qualidade, proporcionando aos nossos consumidores uma experiência única de sabor e confiança.</p>
+          <p className="text-gray-600 leading-relaxed text-lg relative z-10">{settings?.aboutMission || "Produzir alimentos lácteos com excelência, segurança e qualidade, proporcionando aos nossos consumidores uma experiência única de sabor e confiança. Atuamos de forma ética e responsável, fortalecendo parcerias duradouras com nossos produtores e valorizando nossos colaboradores por meio do desenvolvimento profissional, pessoal e humano, contribuindo para o crescimento de todos que fazem parte da nossa história."}</p>
         </div>
         <div className="bg-white p-10 rounded-3xl shadow-lg border border-gray-100 relative overflow-hidden">
           <div className="absolute -left-6 -bottom-6 text-[#00b1f4]/10"><Eye size={120} /></div>
           <h2 className="text-3xl font-bold mb-6 text-[#00b1f4] relative z-10">Visão</h2>
-          <p className="text-gray-600 leading-relaxed text-lg relative z-10">Ser referência como uma das principais indústrias de laticínios de Minas Gerais e região, destacando-se pela qualidade dos nossos produtos e inovação.</p>
+          <p className="text-gray-600 leading-relaxed text-lg relative z-10">{settings?.aboutVision || "Ser referência como uma das principais indústrias de laticínios de Minas Gerais e região, destacando-se pela qualidade dos nossos produtos, inovação, eficiência na gestão e compromisso com a satisfação dos clientes. Buscamos também valorizar nossos colaboradores e manter relações sólidas, justas e confiáveis com os produtores rurais da nossa região."}</p>
         </div>
       </div>
 
@@ -148,8 +173,12 @@ export default function AboutPage() {
 
   const renderStyle3 = () => (
     <section className="min-h-screen bg-gray-900 text-white">
-      <div className="w-full h-[60vh] relative flex items-center justify-center">
-        <Image src="/sobre.png" alt="Hero Sobre" fill className="object-cover opacity-40" />
+      <div className="w-full h-[60vh] relative flex items-center justify-center overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div key={activeAboutImage} initial={{ opacity: 0 }} animate={{ opacity: 0.4 }} exit={{ opacity: 0 }} transition={{ duration: 1 }} className="absolute inset-0">
+            <Image src={activeAboutImage} alt="Hero Sobre" fill className="object-cover" />
+          </motion.div>
+        </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900" />
         <div className="relative z-10 text-center space-y-6 max-w-3xl px-6">
           <h1 className="text-6xl md:text-8xl font-serif font-bold text-amber-500">História</h1>
@@ -161,7 +190,7 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div className="space-y-6">
             <h2 className="text-4xl font-bold text-amber-500 border-b border-gray-700 pb-4">Nossa Missão</h2>
-            <p className="text-xl text-gray-400 leading-relaxed font-light">Produzir alimentos lácteos com excelência, segurança e qualidade, proporcionando aos nossos consumidores uma experiência única de sabor e confiança. Atuamos de forma ética e responsável, fortalecendo parcerias duradouras com nossos produtores.</p>
+            <p className="text-xl text-gray-400 leading-relaxed font-light">{settings?.aboutMission || "Produzir alimentos lácteos com excelência, segurança e qualidade, proporcionando aos nossos consumidores uma experiência única de sabor e confiança. Atuamos de forma ética e responsável, fortalecendo parcerias duradouras com nossos produtores e valorizando nossos colaboradores por meio do desenvolvimento profissional, pessoal e humano, contribuindo para o crescimento de todos que fazem parte da nossa história."}</p>
           </div>
           <div className="h-[400px] bg-gray-800 rounded-lg flex items-center justify-center p-12">
              <Target size={120} className="text-amber-500/20" />
@@ -174,7 +203,7 @@ export default function AboutPage() {
           </div>
           <div className="space-y-6 order-1 md:order-2">
             <h2 className="text-4xl font-bold text-[#00b1f4] border-b border-gray-700 pb-4">Nossa Visão</h2>
-            <p className="text-xl text-gray-400 leading-relaxed font-light">Ser referência como uma das principais indústrias de laticínios de Minas Gerais e região, destacando-se pela qualidade dos nossos produtos, inovação, eficiência na gestão e compromisso com a satisfação dos clientes.</p>
+            <p className="text-xl text-gray-400 leading-relaxed font-light">{settings?.aboutVision || "Ser referência como uma das principais indústrias de laticínios de Minas Gerais e região, destacando-se pela qualidade dos nossos produtos, inovação, eficiência na gestão e compromisso com a satisfação dos clientes. Buscamos também valorizar nossos colaboradores e manter relações sólidas, justas e confiáveis com os produtores rurais da nossa região."}</p>
           </div>
         </div>
         

@@ -183,6 +183,50 @@ export default function ConfiguracoesPage() {
 
           <Card>
             <CardContent className="p-6">
+              <h2 className="text-xl font-semibold mb-4">Textos Institucionais (Sobre)</h2>
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">História - Parágrafo 1</label>
+                  <textarea
+                    className="w-full border-2 border-gray-200 rounded-xl p-3 focus:border-[#00b1f4] focus:outline-none transition-colors"
+                    rows="3"
+                    value={formData.aboutHistoryText1 !== undefined ? formData.aboutHistoryText1 : "Fundado em 2007, o Laticínios Vallys vem, desde então, investindo continuamente na modernização de sua estrutura, na inovação de seus processos e na utilização de equipamentos de alta tecnologia. Nosso compromisso é oferecer produtos de excelência, levando aos consumidores qualidade, sabor e confiança em cada produto."}
+                    onChange={(e) => handleChange("aboutHistoryText1", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">História - Parágrafo 2</label>
+                  <textarea
+                    className="w-full border-2 border-gray-200 rounded-xl p-3 focus:border-[#00b1f4] focus:outline-none transition-colors"
+                    rows="2"
+                    value={formData.aboutHistoryText2 !== undefined ? formData.aboutHistoryText2 : "Temos orgulho de fazer parte da história de Lajinha (MG), contribuindo para o desenvolvimento da região e consolidando nossa marca como referência no setor de laticínios."}
+                    onChange={(e) => handleChange("aboutHistoryText2", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Texto da Missão</label>
+                  <textarea
+                    className="w-full border-2 border-gray-200 rounded-xl p-3 focus:border-[#00b1f4] focus:outline-none transition-colors"
+                    rows="3"
+                    value={formData.aboutMission !== undefined ? formData.aboutMission : "Produzir alimentos lácteos com excelência, segurança e qualidade, proporcionando aos nossos consumidores uma experiência única de sabor e confiança. Atuamos de forma ética e responsável, fortalecendo parcerias duradouras com nossos produtores e valorizando nossos colaboradores por meio do desenvolvimento profissional, pessoal e humano, contribuindo para o crescimento de todos que fazem parte da nossa história."}
+                    onChange={(e) => handleChange("aboutMission", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Texto da Visão</label>
+                  <textarea
+                    className="w-full border-2 border-gray-200 rounded-xl p-3 focus:border-[#00b1f4] focus:outline-none transition-colors"
+                    rows="3"
+                    value={formData.aboutVision !== undefined ? formData.aboutVision : "Ser referência como uma das principais indústrias de laticínios de Minas Gerais e região, destacando-se pela qualidade dos nossos produtos, inovação, eficiência na gestão e compromisso com a satisfação dos clientes. Buscamos também valorizar nossos colaboradores e manter relações sólidas, justas e confiáveis com os produtores rurais da nossa região."}
+                    onChange={(e) => handleChange("aboutVision", e.target.value)}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
               <h2 className="text-xl font-semibold mb-4">Tipografia (Fonte Principal)</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {["inter", "roboto", "playfair"].map((font) => (
