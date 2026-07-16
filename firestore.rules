@@ -5,7 +5,10 @@ service cloud.firestore {
 
     // Helper: Verifica se a requisição é feita por um administrador autenticado e com ID correto
     function isAdmin() {
-      return request.auth != null && request.auth.uid == 'JPY8rJxcWNZ16mmce4OSTDqm1no2';
+      return request.auth != null && (
+        request.auth.uid == 'JPY8rJxcWNZ16mmce4OSTDqm1no2' || 
+        request.auth.uid == 'xQyXhiHNchWBJr0FzPqG5mSuyE83'
+      );
     }
 
     // Regras para a coleção de Produtos

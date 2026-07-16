@@ -319,8 +319,6 @@ export async function swapOrder(collectionName, idA, orderA, idB, orderB) {
   batch.update(doc(db, collectionName, idA), { order: orderB });
   batch.update(doc(db, collectionName, idB), { order: orderA });
   await batch.commit();
-
-  clearStoredCache(cacheKeyMap[collectionName] || collectionName);
 }
 
 /**
@@ -337,8 +335,6 @@ export async function reindexOrders(collectionName, orderedIds) {
     batch.update(doc(db, collectionName, id), { order: index });
   });
   await batch.commit();
-
-  clearStoredCache(cacheKeyMap[collectionName] || collectionName);
 }
 
 /**
@@ -357,8 +353,6 @@ export async function ensurePersisted(collectionName, item, order) {
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
-
-  clearStoredCache(cacheKeyMap[collectionName] || collectionName);
 }
 
 /**
@@ -380,8 +374,6 @@ export async function initializeAndSwap(collectionName, orderedIds, idA, indexA,
     batch.update(doc(db, collectionName, id), { order: targetOrder });
   });
   await batch.commit();
-
-  clearStoredCache(cacheKeyMap[collectionName] || collectionName);
 }
 
 /**

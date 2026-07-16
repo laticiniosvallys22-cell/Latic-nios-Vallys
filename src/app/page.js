@@ -202,78 +202,90 @@ export default function Home() {
 
       {/* SEÇÃO SOBRE (Resumo Dinâmico) */}
       {(settings?.aboutStyle === "style1" || !settings?.aboutStyle) && (
-      <section className="bg-white border-t border-gray-100">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-            {/* Imagem do Time */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative overflow-hidden rounded-2xl shadow-xl aspect-[4/3] group"
+      <section className="bg-white border-t border-gray-100 flex flex-col">
+        {/* Carrossel Full-Width */}
+        <div className="w-full relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden bg-gray-100">
+          <AnimatePresence initial={false}>
+            <motion.div 
+              key={activeAboutImage} 
+              initial={{ x: "100%" }} 
+              animate={{ x: 0 }} 
+              exit={{ x: "-100%" }} 
+              transition={{ duration: 0.8, ease: "easeInOut" }} 
+              className="absolute inset-0"
             >
-              <AnimatePresence mode="wait">
-                <motion.div key={activeAboutImage} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0">
-                  <Image
-                    src={activeAboutImage}
-                    alt="Equipe e Fábrica Laticínios Vallys"
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 1024px) 100vw, 600px"
-                  />
-                </motion.div>
-              </AnimatePresence>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+              <Image
+                src={activeAboutImage}
+                alt="Fábrica Laticínios Vallys"
+                fill
+                className="object-cover"
+                sizes="100vw"
+                priority
+              />
             </motion.div>
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+        </div>
 
-            {/* Texto Descritivo */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="space-y-6"
-            >
-              <div className="space-y-2">
-                <p className="text-sm font-semibold uppercase tracking-wider text-amber-500">
-                  Quem Somos
-                </p>
-                <h2 className="text-3xl font-extrabold text-[#7c1421] sm:text-4xl uppercase tracking-tight">
-                  Laticínios Vallys
-                </h2>
-                <div className="h-[4px] w-[80px] bg-[#7c1421] rounded-full"></div>
-              </div>
+        {/* Texto Descritivo Centrado */}
+        <div className="mx-auto max-w-4xl px-6 py-20 text-center space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="space-y-4"
+          >
+            <p className="text-sm font-bold uppercase tracking-wider text-amber-500">
+              Quem Somos
+            </p>
+            <h2 className="text-4xl font-extrabold text-[#7c1421] sm:text-5xl uppercase tracking-tight">
+              Laticínios Vallys
+            </h2>
+            <div className="h-[4px] w-[80px] bg-[#7c1421] rounded-full mx-auto"></div>
+          </motion.div>
 
-              <div className="space-y-4 text-base leading-relaxed text-muted font-medium">
-                <p>
-                  Fundado em 2007, o Laticínios Vallys vem, desde então, investindo continuamente na modernização de sua estrutura, na inovação de seus processos e na utilização de equipamentos de alta tecnologia. Nosso compromisso é oferecer produtos de excelência, levando aos consumidores qualidade, sabor e confiança em cada produto.
-                </p>
-                <p>
-                  Temos orgulho de fazer parte da história de Lajinha (MG), contribuindo para o desenvolvimento da região e consolidando nossa marca como referência no setor de laticínios.
-                </p>
-              </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="space-y-6 text-lg leading-relaxed text-muted font-medium mx-auto"
+          >
+            <p>
+              Fundado em 2007, o Laticínios Vallys vem, desde então, investindo continuamente na modernização de sua estrutura, na inovação de seus processos e na utilização de equipamentos de alta tecnologia. Nosso compromisso é oferecer produtos de excelência, levando aos consumidores qualidade, sabor e confiança em cada produto.
+            </p>
+            <p>
+              Temos orgulho de fazer parte da história de Lajinha (MG), contribuindo para o desenvolvimento da região e consolidando nossa marca como referência no setor de laticínios.
+            </p>
+          </motion.div>
 
-              {/* Destaques rápidos */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-100">
-                <div className="text-center">
-                  <span className="block text-2xl font-extrabold text-[#00b1f4]">2007</span>
-                  <span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Fundação</span>
-                </div>
-                <div className="text-center">
-                  <span className="block text-2xl font-extrabold text-[#00b1f4]">Lajinha</span>
-                  <span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Origem (MG)</span>
-                </div>
-                <div className="text-center">
-                  <span className="block text-2xl font-extrabold text-[#00b1f4]">100%</span>
-                  <span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Qualidade</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+          {/* Destaques rápidos */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-100 max-w-2xl mx-auto"
+          >
+            <div className="text-center">
+              <span className="block text-3xl md:text-4xl font-extrabold text-[#00b1f4]">2007</span>
+              <span className="text-xs md:text-sm text-muted font-bold uppercase tracking-wider">Fundação</span>
+            </div>
+            <div className="text-center">
+              <span className="block text-3xl md:text-4xl font-extrabold text-[#00b1f4]">Lajinha</span>
+              <span className="text-xs md:text-sm text-muted font-bold uppercase tracking-wider">Origem (MG)</span>
+            </div>
+            <div className="text-center">
+              <span className="block text-3xl md:text-4xl font-extrabold text-[#00b1f4]">100%</span>
+              <span className="text-xs md:text-sm text-muted font-bold uppercase tracking-wider">Qualidade</span>
+            </div>
+          </motion.div>
+        </div>
 
-          {/* Missão, Visão e Valores (Layout Livre, sem bordas/sombras, centralizado) */}
-          <div className="mt-16 pt-16 border-t border-gray-100 grid gap-12 md:grid-cols-3">
+          {/* Missão, Visão e Valores */}
+          <div className="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+            <div className="pt-16 border-t border-gray-100 grid gap-12 md:grid-cols-3">
             {/* Card Missão */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
