@@ -430,9 +430,19 @@ export async function saveSettings(settings) {
 export async function getAboutImages() {
   if (!db) return [];
 
-  const q = query(collection(db, "aboutImages"), orderBy("order", "asc"));
+  const q = query(collection(db, "aboutImages"));
   const snapshot = await getDocs(q);
   const results = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+  results.sort((a, b) => {
+    const orderA = typeof a.order === 'number' ? a.order : 9999;
+    const orderB = typeof b.order === 'number' ? b.order : 9999;
+    if (orderA !== orderB) return orderA - orderB;
+    
+    const timeA = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+    const timeB = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+    return timeA - timeB;
+  });
 
   return results;
 }

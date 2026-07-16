@@ -11,6 +11,7 @@ import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useProducts } from "@/hooks/useProducts";
 import { useRecipes } from "@/hooks/useRecipes";
 import { useHighlights } from "@/hooks/useHighlights";
+import { useAboutImages } from "@/hooks/useAboutImages";
 import ProductCarousel from "@/components/ProductCarousel";
 import { getCategoryStyle, demoHighlights, productCategories } from "@/interfaces/catalog";
 import { useSettings } from "@/contexts/SettingsContext";
@@ -45,6 +46,19 @@ export default function Home() {
   const { products, loading: productsLoading, error: productsError } = useProducts();
   const { recipes, loading: recipesLoading } = useRecipes();
   const { highlights, loading: highlightsLoading } = useHighlights();
+  const { images: aboutImages } = useAboutImages();
+
+  const [currentAboutIdx, setCurrentAboutIdx] = useState(0);
+  useEffect(() => {
+    if (aboutImages && aboutImages.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentAboutIdx((prev) => (prev + 1) % aboutImages.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [aboutImages]);
+
+  const activeAboutImage = aboutImages && aboutImages.length > 0 ? aboutImages[currentAboutIdx].image : "/sobre.png";
 
   const slides = useMemo(() => {
     return highlights.length > 0 ? highlights : demoHighlights;
@@ -199,13 +213,17 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="relative overflow-hidden rounded-2xl shadow-xl aspect-[4/3] group"
             >
-              <Image
-                src="/sobre.png"
-                alt="Equipe e Fábrica Laticínios Vallys"
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 1024px) 100vw, 600px"
-              />
+              <AnimatePresence mode="wait">
+                <motion.div key={activeAboutImage} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0">
+                  <Image
+                    src={activeAboutImage}
+                    alt="Equipe e Fábrica Laticínios Vallys"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 1024px) 100vw, 600px"
+                  />
+                </motion.div>
+              </AnimatePresence>
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
             </motion.div>
 
@@ -334,8 +352,12 @@ export default function Home() {
                   <Link href="/sobre">Conheça nossa história completa</Link>
                 </Button>
               </div>
-              <div className="order-1 lg:order-2 relative h-[450px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white">
-                <Image src="/sobre.png" alt="Laticínios Vallys" fill sizes="(max-width: 1024px) 100vw, 600px" className="object-cover" />
+              <div className="order-1 lg:order-2 relative h-[450px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white group">
+                <AnimatePresence mode="wait">
+                  <motion.div key={activeAboutImage} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0">
+                    <Image src={activeAboutImage} alt="Laticínios Vallys" fill sizes="(max-width: 1024px) 100vw, 600px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           </div>
@@ -344,7 +366,11 @@ export default function Home() {
 
       {settings?.aboutStyle === "style3" && (
         <section className="bg-gray-900 py-32 text-white relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20"><Image src="/sobre.png" alt="Fundo Sobre" fill className="object-cover" /></div>
+          <AnimatePresence mode="wait">
+            <motion.div key={activeAboutImage} initial={{ opacity: 0 }} animate={{ opacity: 0.2 }} exit={{ opacity: 0 }} transition={{ duration: 1 }} className="absolute inset-0">
+              <Image src={activeAboutImage} alt="Fundo Sobre" fill className="object-cover" />
+            </motion.div>
+          </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent" />
           <div className="relative z-10 mx-auto max-w-4xl px-6 lg:px-8 text-center space-y-10">
             <h2 className="text-5xl md:text-7xl font-serif font-bold text-amber-500 drop-shadow-xl">Nossa Essência</h2>
