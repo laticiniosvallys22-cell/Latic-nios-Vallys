@@ -145,13 +145,25 @@ export default function Hero({ slides, heroStyle }) {
                     {slide.badge}
                   </div>
                 )}
-                <div className="space-y-1">
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white uppercase leading-none drop-shadow-sm">
-                    <Typewriter key={`title-${currentSlide}`} text={slide.titleLeft} speed={50} delay={200} showCursor={false} />
-                  </h2>
-                  <span className="font-caveat text-yellow-300 text-4xl sm:text-5xl md:text-6xl tracking-wide rotate-[-2.5deg] inline-block drop-shadow-md origin-left pt-1">
-                    <Typewriter key={`sub-${currentSlide}`} text={slide.subtitleLeft} speed={45} delay={900} showCursor={false} />
-                  </span>
+                <div className="relative space-y-1">
+                  {/* Text rendered invisibly to preserve exact height and prevent layout shift during Typewriter effect */}
+                  <div className="opacity-0 pointer-events-none select-none" aria-hidden="true">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight uppercase leading-none">
+                      {slide.titleLeft}
+                    </h2>
+                    <span className="font-caveat text-4xl sm:text-5xl md:text-6xl tracking-wide rotate-[-2.5deg] inline-block pt-1">
+                      {slide.subtitleLeft}
+                    </span>
+                  </div>
+                  {/* Actual visible typing text */}
+                  <div className="absolute inset-0">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white uppercase leading-none drop-shadow-sm">
+                      <Typewriter key={`title-${currentSlide}`} text={slide.titleLeft} speed={50} delay={200} showCursor={false} />
+                    </h2>
+                    <span className="font-caveat text-yellow-300 text-4xl sm:text-5xl md:text-6xl tracking-wide rotate-[-2.5deg] inline-block drop-shadow-md origin-left pt-1">
+                      <Typewriter key={`sub-${currentSlide}`} text={slide.subtitleLeft} speed={45} delay={900} showCursor={false} />
+                    </span>
+                  </div>
                 </div>
                 <div className="pt-2 md:pt-4 flex flex-wrap gap-3">
                   <Button asChild size="md" className="bg-white font-semibold text-[#00b1f4] shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 cursor-pointer">

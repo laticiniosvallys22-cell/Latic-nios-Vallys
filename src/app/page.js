@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, BadgeCheck, Sparkles, Star, Truck, ChevronLeft, ChevronRight, ChevronDown, Target, Eye, Award, ChefHat } from "lucide-react";
+import { ArrowRight, BadgeCheck, Sparkles, Star, Truck, ChevronLeft, ChevronRight, ChevronDown, Target, Eye, Award, ChefHat, Droplets } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "@/components/ProductCard";
 import RecipeCard from "@/components/RecipeCard";
@@ -143,17 +143,27 @@ export default function Home() {
 
       {/* SEÇÃO DE LINHAS DE PRODUTOS */}
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <div className="flex flex-col items-center text-center mb-16">
-          <h2 className="text-4xl font-extrabold text-[#7c1421] md:text-5xl uppercase tracking-tight">
-            Mais sabor em sua Vida!
-          </h2>
-          <p className="mt-2 text-xl font-bold text-amber-500 tracking-wide">
-            Conheça nossas linhas de produtos
-          </p>
-          <div className="mt-4 flex h-[5px] w-[180px] rounded-full overflow-hidden">
-            <div className="w-1/2 bg-orange-500"></div>
-            <div className="w-1/2 bg-[#7c1421]"></div>
+        <div className="flex flex-col items-center text-center mb-24">
+          <div className="flex flex-col items-center justify-center text-[#00b1f4] mb-4">
+             <motion.div
+               animate={{ y: [0, -6, 0] }}
+               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+             >
+               <Droplets size={44} strokeWidth={1.5} className="mb-2" />
+             </motion.div>
+             <motion.div
+               animate={{ y: [0, 6, 0] }}
+               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+             >
+               <ChevronDown size={32} strokeWidth={3} />
+             </motion.div>
           </div>
+          <span className="text-2xl md:text-3xl font-bold text-[#00b1f4] mb-[-4px] md:mb-[-6px] z-10 tracking-tight lowercase">
+            criações
+          </span>
+          <h2 className="text-7xl md:text-[8rem] font-black text-[#00b1f4] tracking-tighter leading-none" style={{ fontFamily: 'Georgia, serif' }}>
+            Vallys
+          </h2>
         </div>
 
         {/* Exibição condicional de carregamento ou erro */}
