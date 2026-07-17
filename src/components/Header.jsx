@@ -123,14 +123,16 @@ export default function Header() {
         </div>
 
         {/* Menu Principal (Centralizado) */}
-        <nav className="hidden items-center justify-center gap-0.5 lg:gap-2 xl:gap-3 md:flex flex-1 mx-2">
+        <nav className="hidden items-center justify-center gap-1 lg:gap-2 xl:gap-4 md:flex flex-1 mx-2">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "rounded-[8px] px-2.5 py-2 text-[13px] lg:text-base xl:text-lg lg:px-4 lg:py-3 font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-[#00b1f4] whitespace-nowrap",
-                pathname === item.href && "bg-blue-50 text-[#00b1f4]",
+                "relative rounded-full px-4 py-2 lg:px-5 lg:py-2.5 text-[13px] lg:text-[14px] xl:text-[15px] font-bold tracking-wide uppercase transition-all duration-300 whitespace-nowrap",
+                pathname === item.href 
+                  ? "bg-[#00b1f4] text-white shadow-md shadow-[#00b1f4]/30 scale-105" 
+                  : "text-[#154687] hover:bg-sky-50 hover:text-[#00b1f4]"
               )}
             >
               {item.label}
