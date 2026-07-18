@@ -23,29 +23,29 @@ export default function ProductCard({ product, isProductPage = false }) {
   };
 
   const renderCardStyle1 = () => (
-    <article className="group relative w-full flex flex-col items-center justify-center text-center px-4 py-8 lg:p-6 lg:h-[380px] select-none cursor-pointer" onClick={() => setShowModal(true)}>
+    <article className="group relative w-full flex flex-col items-center justify-center text-center px-4 py-5 sm:py-8 lg:p-6 lg:h-[380px] select-none cursor-pointer" onClick={() => setShowModal(true)}>
       {/* Card background (always visible so it works on /produtos on mobile) */}
       <div className={`absolute inset-0 rounded-[2rem] ${style.cardBg} lg:shadow-sm transition-all duration-300 -z-10`} />
 
       {/* Product Image */}
-      <div className={`relative w-full ${isProductPage ? "h-[200px] mb-4" : "h-[280px] sm:h-[350px] mb-8"} lg:h-[180px] lg:mb-4 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center`}>
+      <div className={`relative w-full ${isProductPage ? "h-[180px] sm:h-[200px] mb-3 sm:mb-4" : "h-[240px] sm:h-[300px] mb-4 sm:mb-8"} lg:h-[180px] lg:mb-4 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center`}>
         <Image src={product.image || "/logo.png"} alt={product.name} fill sizes="(max-width: 768px) 100vw, 400px" className="object-contain drop-shadow-2xl lg:drop-shadow-lg" />
       </div>
       
       <div className="lg:w-full lg:text-left lg:flex lg:flex-col lg:items-start lg:mt-auto lg:flex-grow lg:justify-end">
         {/* Subtitle / Phrase */}
-        <p className={`${isProductPage ? "text-xs mb-4" : "text-lg sm:text-xl mb-10"} font-bold text-white tracking-widest uppercase drop-shadow-sm opacity-90 lg:text-[11px] lg:mb-1 lg:opacity-80 lg:drop-shadow-none`}>
+        <p className={`${isProductPage ? "text-xs mb-3 sm:mb-4" : "text-sm sm:text-lg md:text-xl mb-4 sm:mb-10"} font-bold text-white tracking-widest uppercase drop-shadow-sm opacity-90 lg:text-[11px] lg:mb-1 lg:opacity-80 lg:drop-shadow-none`}>
           <span className="lg:hidden">{product.category === "Iogurtes" ? "Para você treinar com gosto!" : `A melhor escolha em ${product.category}`}</span>
           <span className="hidden lg:inline">CONSULTE</span>
         </p>
 
         {/* Product Name (styled as a logo/large text) */}
-        <h3 className={`${isProductPage ? "text-2xl mb-4" : "text-3xl sm:text-4xl md:text-5xl mb-4"} font-black text-white tracking-tighter drop-shadow-md line-clamp-2 leading-tight lg:text-base lg:font-bold lg:tracking-normal lg:drop-shadow-none lg:mb-4`} style={{ fontFamily: '"Arial Rounded MT Bold", "Nunito", sans-serif' }}>
+        <h3 className={`${isProductPage ? "text-xl sm:text-2xl mb-3 sm:mb-4" : "text-2xl sm:text-3xl md:text-5xl mb-3 sm:mb-4"} font-black text-white tracking-tighter drop-shadow-md line-clamp-2 leading-tight lg:text-base lg:font-bold lg:tracking-normal lg:drop-shadow-none lg:mb-4`} style={{ fontFamily: '"Arial Rounded MT Bold", "Nunito", sans-serif' }}>
           {product.name}
         </h3>
         
         {/* Button */}
-        <button type="button" className={`border-[3px] border-white text-white font-bold tracking-wider hover:bg-white hover:text-slate-900 transition-colors duration-300 shadow-sm active:scale-95 ${isProductPage ? "px-6 py-2 text-sm" : "px-12 py-3.5 text-lg"} lg:w-full lg:mt-auto lg:py-2.5 lg:bg-white/20 lg:border-[2px] lg:border-white lg:hover:bg-white lg:hover:text-[#1a1a4e] lg:text-white lg:text-sm lg:rounded-xl lg:tracking-normal`}>
+        <button type="button" className={`border-[3px] border-white text-white font-bold tracking-wider hover:bg-white hover:text-slate-900 transition-colors duration-300 shadow-sm active:scale-95 ${isProductPage ? "px-5 py-2.5 text-sm sm:px-6" : "px-8 py-2.5 text-base sm:px-12 sm:py-3.5 sm:text-lg"} lg:w-full lg:mt-auto lg:py-2.5 lg:bg-white/20 lg:border-[2px] lg:border-white lg:hover:bg-white lg:hover:text-[#1a1a4e] lg:text-white lg:text-sm lg:rounded-xl lg:tracking-normal`}>
           <span className="lg:hidden">SAIBA MAIS</span>
           <span className="hidden lg:inline">Detalhes</span>
         </button>
