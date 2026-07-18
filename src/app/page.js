@@ -142,8 +142,8 @@ export default function Home() {
       )}
 
       {/* SEÇÃO DE LINHAS DE PRODUTOS */}
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <div className="flex flex-col items-center text-center mb-24">
+      <section className="py-20 w-full overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col items-center text-center mb-24">
           <div className="flex flex-col items-center justify-center text-[#00b1f4] mb-4">
              <motion.div
                animate={{ y: [0, -6, 0] }}
@@ -194,7 +194,7 @@ export default function Home() {
               <div key={category} className="mb-16">
                 {/* Category Title & Toggle Button */}
                 <div 
-                  className="flex flex-col items-center text-center mb-8 cursor-pointer group select-none"
+                  className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col items-center text-center mb-8 cursor-pointer group select-none"
                   onClick={() => toggleCategory(category)}
                 >
                   <div className="w-24 h-24 relative mb-4 hover:scale-110 transition-transform duration-300">
@@ -235,7 +235,7 @@ export default function Home() {
                     >
                       <ProductCarousel category={category}>
                         {items.map((product) => (
-                          <div key={product.id} className="w-[260px] sm:w-[300px] shrink-0 snap-center flex">
+                          <div key={product.id} className="w-full max-w-[800px] shrink-0 snap-center flex justify-center">
                             <ProductCard product={product} />
                           </div>
                         ))}

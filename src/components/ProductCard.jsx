@@ -23,27 +23,26 @@ export default function ProductCard({ product }) {
   };
 
   const renderCardStyle1 = () => (
-    <article className="group relative w-full h-[395px] select-none filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] hover:drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1.5 cursor-pointer" onClick={() => setShowModal(true)}>
-      <div className={cn(
-        "absolute top-0 left-0 w-full h-[96%] rounded-[24px] p-4 sm:p-5 pb-8 flex flex-col justify-between overflow-hidden",
-        style.cardBg
-      )}>
-        <div className="relative w-[calc(100%+32px)] -mx-4 sm:w-[calc(100%+40px)] sm:-mx-5 h-[220px] sm:h-[260px] flex items-center justify-center mb-1 group-hover:scale-[1.12] transition-transform duration-300">
-          <Image src={product.image || "/logo.png"} alt={product.name} fill sizes="(max-width: 768px) 100vw, 350px" className="object-contain" />
-        </div>
-        <div className="flex flex-col items-start text-left w-full pb-0">
-          <span className="text-xs font-bold text-white/80 uppercase tracking-wide mb-1">{product.price || "Consulte"}</span>
-          <h3 className="text-[17px] font-extrabold text-white leading-snug line-clamp-2 min-h-[48px]">{product.name}</h3>
-        </div>
+    <article className="group relative w-full flex flex-col items-center justify-center text-center px-4 py-8 select-none cursor-pointer" onClick={() => setShowModal(true)}>
+      {/* Product Image */}
+      <div className="relative w-full h-[280px] sm:h-[350px] mb-8 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+        <Image src={product.image || "/logo.png"} alt={product.name} fill sizes="(max-width: 768px) 100vw, 400px" className="object-contain drop-shadow-2xl" />
       </div>
-      <div className={cn(
-        "absolute bottom-0 left-0 w-[70%] h-[12%] rounded-b-[24px] flex items-center justify-center p-2 pb-2.5",
-        style.cardBg
-      )}>
-        <button type="button" onClick={(e) => { e.stopPropagation(); setShowModal(true); }} className="w-full h-8 flex items-center justify-center rounded-[10px] bg-[#1a1a4e] hover:bg-[#00b1f4] text-white font-bold text-[13px] tracking-wide transition-all duration-200 cursor-pointer shadow-sm active:scale-95">
-          Detalhes
-        </button>
-      </div>
+      
+      {/* Product Name (styled as a logo/large text) */}
+      <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter mb-4 drop-shadow-md line-clamp-2 leading-tight" style={{ fontFamily: '"Arial Rounded MT Bold", "Nunito", sans-serif' }}>
+        {product.name}
+      </h3>
+      
+      {/* Subtitle / Phrase */}
+      <p className="text-lg sm:text-xl font-bold text-white tracking-widest uppercase mb-10 drop-shadow-sm opacity-90">
+        {product.category === "Iogurtes" ? "Para você treinar com gosto!" : `A melhor escolha em ${product.category}`}
+      </p>
+      
+      {/* Button */}
+      <button type="button" className="px-12 py-3.5 border-[3px] border-white text-white font-bold text-lg tracking-wider hover:bg-white hover:text-slate-900 transition-colors duration-300 shadow-sm active:scale-95">
+        SAIBA MAIS
+      </button>
     </article>
   );
 
