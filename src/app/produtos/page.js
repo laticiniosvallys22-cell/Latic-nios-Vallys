@@ -111,10 +111,10 @@ export default function ProductsPage() {
                 </div>
 
                 {/* Grid layout wrapper */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-full place-items-center sm:place-items-stretch">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full place-items-center sm:place-items-stretch">
                   {items.map((product) => (
-                    <div key={product.id} className="w-full max-w-[320px] sm:max-w-none flex">
-                      <ProductCard product={product} />
+                    <div key={product.id} className="w-full flex">
+                      <ProductCard product={product} isProductPage={true} />
                     </div>
                   ))}
                 </div>

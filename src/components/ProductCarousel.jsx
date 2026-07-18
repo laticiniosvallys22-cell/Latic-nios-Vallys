@@ -114,40 +114,39 @@ export default function ProductCarousel({ children, category }) {
   };
 
   return (
-    <div className={`relative group w-full flex flex-col items-center overflow-hidden py-8 sm:py-12 shadow-xl ${style.cardBg}`}>
+    <div className={`relative group w-full flex flex-col items-center overflow-hidden py-8 sm:py-12 shadow-xl ${style.cardBg} lg:!bg-transparent lg:!shadow-none`}>
       <style>{`
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
       `}</style>
 
-      {/* Side Arrows */}
-      <div className="absolute inset-y-0 left-0 flex items-center z-20">
-        <button
-          onClick={() => scroll("left")}
-          className="bg-white text-[#1a1a4e] flex items-center justify-start h-[200px] sm:h-[300px] md:h-[400px] w-[40px] sm:w-[50px] hover:w-[50px] sm:hover:w-[60px] transition-all duration-300 shadow-[5px_0_20px_rgba(0,0,0,0.15)] pl-1 sm:pl-2"
-          style={{ borderRadius: '0 100% 100% 0 / 0 50% 50% 0' }}
-          aria-label="Anterior"
-        >
-          <ChevronLeft size={36} className="stroke-[3]" />
-        </button>
-      </div>
+              <div className="absolute inset-y-0 left-0 flex items-center z-20 lg:hidden">
+                <button
+                  onClick={() => scroll("left")}
+                  className="bg-white/90 text-[#1a1a4e] flex items-center justify-start h-[40px] sm:h-[50px] md:h-[60px] w-[20px] sm:w-[25px] md:w-[30px] hover:w-[25px] sm:hover:w-[30px] md:hover:w-[35px] transition-all duration-300 shadow-[5px_0_20px_rgba(0,0,0,0.15)] pl-0 sm:pl-0.5"
+                  style={{ borderRadius: '0 100% 100% 0 / 0 50% 50% 0' }}
+                  aria-label="Anterior"
+                >
+                  <ChevronLeft size={20} className="stroke-[3]" />
+                </button>
+              </div>
 
-      <div className="absolute inset-y-0 right-0 flex items-center z-20">
-        <button
-          onClick={() => scroll("right")}
-          className="bg-white text-[#1a1a4e] flex items-center justify-end h-[200px] sm:h-[300px] md:h-[400px] w-[40px] sm:w-[50px] hover:w-[50px] sm:hover:w-[60px] transition-all duration-300 shadow-[-5px_0_20px_rgba(0,0,0,0.15)] pr-1 sm:pr-2"
-          style={{ borderRadius: '100% 0 0 100% / 50% 0 0 50%' }}
-          aria-label="Próximo"
-        >
-          <ChevronRight size={36} className="stroke-[3]" />
-        </button>
-      </div>
+              <div className="absolute inset-y-0 right-0 flex items-center z-20 lg:hidden">
+                <button
+                  onClick={() => scroll("right")}
+                  className="bg-white/90 text-[#1a1a4e] flex items-center justify-end h-[40px] sm:h-[50px] md:h-[60px] w-[20px] sm:w-[25px] md:w-[30px] hover:w-[25px] sm:hover:w-[30px] md:hover:w-[35px] transition-all duration-300 shadow-[-5px_0_20px_rgba(0,0,0,0.15)] pr-0 sm:pr-0.5"
+                  style={{ borderRadius: '100% 0 0 100% / 50% 0 0 50%' }}
+                  aria-label="Próximo"
+                >
+                  <ChevronRight size={20} className="stroke-[3]" />
+                </button>
+              </div>
       
       {/* Carousel Viewport */}
       <div
         ref={scrollRef}
-        className="no-scrollbar flex overflow-x-auto gap-4 sm:gap-6 scroll-smooth snap-x snap-mandatory px-4 items-stretch w-full"
+        className="no-scrollbar flex overflow-x-auto lg:grid lg:grid-cols-5 lg:overflow-visible gap-4 sm:gap-6 lg:gap-8 scroll-smooth snap-x snap-mandatory pt-4 pb-6 px-10 sm:px-6 lg:px-8 items-stretch w-full max-w-[1600px] mx-auto"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {React.Children.map(children, (child, index) => {
@@ -158,8 +157,8 @@ export default function ProductCarousel({ children, category }) {
               className={`transition-all duration-500 ease-out ${
                 isCenter 
                   ? "opacity-100 z-10 scale-100" 
-                  : "opacity-40 scale-90"
-              } flex shrink-0 w-full justify-center`}
+                  : "opacity-40 scale-90 lg:opacity-100 lg:scale-100"
+              } flex shrink-0 w-full lg:w-auto justify-center`}
             >
               {child}
             </div>
@@ -167,8 +166,8 @@ export default function ProductCarousel({ children, category }) {
         })}
       </div>
 
-      {/* Pagination Dots */}
-      <div className="flex items-center justify-center gap-3 mt-4 sm:mt-6 z-20">
+      {/* Bottom Controls (setas + bicicleta) */}
+      <div className="flex items-center justify-center gap-6 mt-4 sm:mt-6 select-none z-20 lg:hidden">
         {React.Children.map(children, (child, index) => {
           const isActive = centerIndices.includes(index) || (centerIndices.length === 0 && index === 0);
           return (

@@ -65,18 +65,27 @@ export default function AboutImageCarousel() {
 
           {images.length > 1 && (
             <>
-              <button
-                onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-colors z-20 cursor-pointer"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-colors z-20 cursor-pointer"
-              >
-                <ChevronRight size={24} />
-              </button>
+              <div className="absolute inset-y-0 left-0 flex items-center z-20">
+                <button
+                  onClick={(e) => { e.stopPropagation(); prevSlide(); }}
+                  className="bg-white/90 text-[#1a1a4e] flex items-center justify-start h-[60px] sm:h-[80px] md:h-[100px] w-[30px] sm:w-[40px] md:w-[50px] hover:w-[40px] sm:hover:w-[50px] md:hover:w-[60px] transition-all duration-300 shadow-[5px_0_20px_rgba(0,0,0,0.15)] pl-0 sm:pl-1"
+                  style={{ borderRadius: '0 100% 100% 0 / 0 50% 50% 0' }}
+                  aria-label="Anterior"
+                >
+                  <ChevronLeft size={28} className="stroke-[3]" />
+                </button>
+              </div>
+
+              <div className="absolute inset-y-0 right-0 flex items-center z-20">
+                <button
+                  onClick={(e) => { e.stopPropagation(); nextSlide(); }}
+                  className="bg-white/90 text-[#1a1a4e] flex items-center justify-end h-[60px] sm:h-[80px] md:h-[100px] w-[30px] sm:w-[40px] md:w-[50px] hover:w-[40px] sm:hover:w-[50px] md:hover:w-[60px] transition-all duration-300 shadow-[-5px_0_20px_rgba(0,0,0,0.15)] pr-0 sm:pr-1"
+                  style={{ borderRadius: '100% 0 0 100% / 50% 0 0 50%' }}
+                  aria-label="Próximo"
+                >
+                  <ChevronRight size={28} className="stroke-[3]" />
+                </button>
+              </div>
 
               <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
                 {images.map((_, idx) => (
