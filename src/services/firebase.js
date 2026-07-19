@@ -396,11 +396,19 @@ export async function getSettings() {
   if (!db) {
     return null;
   }
+  
+  const cached = getStoredCache("vallys_settings");
+  if (cached) {
+    return cached;
+  }
+
   try {
     const docRef = doc(db, "settings", "general");
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return docSnap.data();
+      const data = docSnap.data();
+      setStoredCache("vallys_settings", data);
+      return data;
     }
     return null;
   } catch (error) {
@@ -415,12 +423,18 @@ export async function saveSettings(settings) {
   }
   const docRef = doc(db, "settings", "general");
   await setDoc(docRef, cleanPayload(settings), { merge: true });
+  clearStoredCache("vallys_settings");
 }
 
 // ─── About Images ─────────────────────────────────────────────────────
 
 export async function getAboutImages() {
   if (!db) return [];
+
+  const cached = getStoredCache("vallys_about_images");
+  if (cached) {
+    return cached;
+  }
 
   const q = query(collection(db, "aboutImages"));
   const snapshot = await getDocs(q);
@@ -436,6 +450,7 @@ export async function getAboutImages() {
     return timeA - timeB;
   });
 
+  setStoredCache("vallys_about_images", results);
   return results;
 }
 
@@ -446,6 +461,7 @@ export async function createAboutImage(image) {
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
+  clearStoredCache("vallys_about_images");
   return docRef.id;
 }
 
@@ -455,10 +471,12 @@ export async function updateAboutImage(id, data) {
     ...cleanPayload(data),
     updatedAt: serverTimestamp(),
   });
+  clearStoredCache("vallys_about_images");
 }
 
 export async function deleteAboutImage(id) {
   if (!db) throw new Error("Configure o Firebase.");
   await deleteDoc(doc(db, "aboutImages", id));
+  clearStoredCache("vallys_about_images");
 }
 
