@@ -301,7 +301,7 @@ export default function Home() {
         <div className="bg-white px-6 py-16 md:py-24 text-[#0f376f] relative z-10">
           <div className="max-w-4xl mx-auto space-y-12">
             <p className="text-xl md:text-2xl leading-relaxed text-center font-semibold">
-              Há mais de uma década escrevemos nossa história com qualidade. Somos mais de:
+              Há mais de uma década escrevemos nossa história com qualidade.
             </p>
             <ul className="space-y-6 text-lg md:text-xl font-medium mx-auto flex flex-col items-start max-w-2xl">
               <li className="flex items-center gap-4">
