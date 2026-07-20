@@ -159,7 +159,7 @@ export default function Home() {
              </motion.div>
           </div>
           <span className="text-2xl md:text-3xl font-bold text-[#00b1f4] mb-[-4px] md:mb-[-6px] z-10 tracking-tight lowercase">
-            criações
+            produtos
           </span>
           <h2 className="text-7xl md:text-[8rem] font-black text-[#00b1f4] tracking-tighter leading-none" style={{ fontFamily: 'Georgia, serif' }}>
             Vallys
