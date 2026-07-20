@@ -522,7 +522,7 @@ export default function Home() {
           <div
             ref={recipeScrollRef}
             onScroll={handleRecipeScroll}
-            className="no-scrollbar flex overflow-x-auto gap-0 scroll-smooth snap-x snap-mandatory pb-6 w-full max-w-[300px] sm:max-w-[340px] md:max-w-4xl mx-auto"
+            className="no-scrollbar flex overflow-x-auto gap-0 scroll-smooth snap-x snap-mandatory pb-6 w-full max-w-[300px] sm:max-w-[340px] md:max-w-6xl lg:max-w-[1400px] mx-auto"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {!recipesLoading && recipes.map((recipe, i) => {
@@ -573,7 +573,7 @@ export default function Home() {
                         variants={containerVariants}
                         initial="hidden"
                         animate={isActive ? "visible" : "hidden"}
-                        className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight leading-none text-white font-sans flex flex-wrap justify-center md:justify-start gap-x-[1px]"
+                        className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight leading-none text-white font-sans flex flex-nowrap justify-center md:justify-start gap-x-[1px]"
                       >
                         {firstWord.split("").map((letter, index) => (
                           <motion.span 
