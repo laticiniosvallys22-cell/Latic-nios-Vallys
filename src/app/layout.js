@@ -52,6 +52,15 @@ export const metadata = {
   authors: [{ name: "Laticínio Vallys" }],
   creator: "Laticínio Vallys",
   publisher: "Laticínio Vallys",
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png' },
+    ],
+  },
   robots: {
     index: true,
     follow: true,
