@@ -17,7 +17,13 @@ import ProductCarousel from "@/components/ProductCarousel";
 import { getCategoryStyle, demoHighlights, productCategories } from "@/interfaces/catalog";
 import { useSettings } from "@/contexts/SettingsContext";
 import Hero from "@/components/Hero";
+import { Suspense } from "react";
 
+const SpoonIcon = ({ className }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12 2C10.3 2 9 3.3 9 5.5C9 8.2 11.3 10.5 11.3 13.5V21C11.3 21.6 11.6 22 12 22C12.4 22 12.7 21.6 12.7 21V13.5C12.7 10.5 15 8.2 15 5.5C15 3.3 13.7 2 12 2Z" />
+  </svg>
+);
 
 export default function Home() {
   const { settings } = useSettings();
@@ -627,9 +633,16 @@ export default function Home() {
                         onClick={() => {
                           window.location.href = `/receitas?id=${recipe.id}`;
                         }}
-                        className="px-8 py-3.5 bg-sky-400 hover:bg-sky-500 text-[#1a1a4e] font-bold text-xs md:text-sm uppercase tracking-wider rounded-full shadow-md transition-all active:scale-95 duration-200 cursor-pointer"
+                        className="relative group px-8 py-3.5 bg-sky-400 hover:bg-sky-500 text-[#1a1a4e] font-bold text-xs md:text-sm uppercase tracking-wider rounded-full shadow-md transition-all active:scale-95 duration-200 cursor-pointer overflow-hidden flex items-center gap-2"
                       >
-                        prepare agora
+                        <span className="relative z-10">prepare agora</span>
+                        <motion.div
+                          animate={{ rotate: [-25, 25, -25] }}
+                          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                          className="absolute right-[40%] top-1/2 -translate-y-[60%] origin-bottom pointer-events-none z-0"
+                        >
+                           <SpoonIcon className="w-8 h-8 text-sky-200 opacity-60 drop-shadow-sm" />
+                        </motion.div>
                       </button>
                     </div>
                   </div>

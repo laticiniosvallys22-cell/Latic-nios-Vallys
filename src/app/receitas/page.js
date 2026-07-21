@@ -3,7 +3,7 @@
 import { useMemo, useState, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Clock, ChefHat, DollarSign, ArrowLeft, Search, Coffee, UtensilsCrossed, Sandwich, CakeSlice } from "lucide-react";
 import RecipeCard from "@/components/RecipeCard";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +22,7 @@ function RecipesContent() {
   const [search, setSearch] = useState("");
   const { recipes, loading, error } = useRecipes();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const activeRecipeId = searchParams.get("id");
 
   const selectedRecipe = useMemo(() => {
@@ -110,13 +111,13 @@ function RecipesContent() {
     return (
       <section className="mx-auto max-w-3xl px-6 py-14 lg:px-8">
         {/* Back Link */}
-        <Link
-          href="/receitas"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-[#8b1a1a] hover:underline mb-8"
+        <button
+          onClick={() => router.push("/receitas")}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-[#8b1a1a] hover:underline mb-8 bg-transparent border-none cursor-pointer"
         >
           <ArrowLeft size={16} />
           Voltar para receitas
-        </Link>
+        </button>
 
         {/* Hero Section */}
         <div className="flex flex-col md:flex-row gap-8 items-center md:items-start mb-8">
