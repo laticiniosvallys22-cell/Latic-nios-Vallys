@@ -112,8 +112,8 @@ function RecipesContent() {
       <section className="relative z-10 mx-auto max-w-3xl px-6 py-14 lg:px-8">
         {/* Back Link */}
         <button
-          onClick={() => router.push("/receitas")}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-[#8b1a1a] hover:underline mb-8 bg-transparent border-none cursor-pointer"
+          onClick={() => { window.location.href = "/receitas"; }}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-[#8b1a1a] hover:underline mb-8 bg-transparent border-none cursor-pointer relative z-20"
         >
           <ArrowLeft size={16} />
           Voltar para receitas

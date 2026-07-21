@@ -191,7 +191,7 @@ export default function Header() {
                 onMouseEnter={isProdutos ? handleMouseEnterProducts : isReceitas ? handleMouseEnterRecipes : undefined}
                 onMouseLeave={isProdutos ? handleMouseLeaveProducts : isReceitas ? handleMouseLeaveRecipes : undefined}
               >
-                <Link
+                <a
                   href={item.href}
                   className={cn(
                     "relative rounded-full px-4 py-2 lg:px-5 lg:py-2.5 text-[13px] lg:text-[14px] xl:text-[15px] font-bold tracking-wide uppercase transition-all duration-300 whitespace-nowrap flex items-center gap-1",
@@ -202,7 +202,7 @@ export default function Header() {
                 >
                   {item.label}
                   {hasDropdown && <ChevronDown size={16} className={cn("transition-transform duration-300", isDropdownOpen ? "rotate-180" : "rotate-0")} />}
-                </Link>
+                </a>
               </div>
             );
           })}
@@ -316,7 +316,7 @@ export default function Header() {
         <div className="border-t border-gray-100 bg-white px-6 py-5 shadow-lg md:hidden">
           <nav className="grid gap-2">
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
@@ -326,7 +326,7 @@ export default function Header() {
                 )}
               >
                 {item.label}
-              </Link>
+              </a>
             ))}
 
             <div className="flex items-center gap-6 py-4 px-3 border-t border-b border-gray-100 my-2">
