@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useProducts } from "@/hooks/useProducts";
+import { productCategories } from "@/interfaces/catalog";
+import Image from "next/image";
 
 const navItems = [
   { href: "/", label: "Início" },
@@ -37,6 +40,31 @@ export default function Header() {
 
   // "drop" = caindo de cima pra posição | "idle" = no lugar | "falling" = caindo pra baixo da tela
   const [logoState, setLogoState] = useState("hidden");
+  const [showMegaMenu, setShowMegaMenu] = useState(false);
+  const megaMenuTimeoutRef = useRef(null);
+  const { products } = useProducts();
+
+  const productsByCategory = useMemo(() => {
+    const groups = {};
+    products.forEach((product) => {
+      let cat = product.category || "Outros";
+      if (cat === "Iogurtes" || cat === "Iogurte") cat = "Bebidas Lácteas";
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(product);
+    });
+    return groups;
+  }, [products]);
+
+  const handleMouseEnterProducts = () => {
+    if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
+    setShowMegaMenu(true);
+  };
+
+  const handleMouseLeaveProducts = () => {
+    megaMenuTimeoutRef.current = setTimeout(() => {
+      setShowMegaMenu(false);
+    }, 200);
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -123,21 +151,31 @@ export default function Header() {
         </div>
 
         {/* Menu Principal (Centralizado) */}
-        <nav className="hidden items-center justify-center gap-1 lg:gap-2 xl:gap-4 md:flex flex-1 mx-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "relative rounded-full px-4 py-2 lg:px-5 lg:py-2.5 text-[13px] lg:text-[14px] xl:text-[15px] font-bold tracking-wide uppercase transition-all duration-300 whitespace-nowrap",
-                pathname === item.href 
-                  ? "bg-[#00b1f4] text-white shadow-md shadow-[#00b1f4]/30 scale-105" 
-                  : "text-[#154687] hover:bg-sky-50 hover:text-[#00b1f4]"
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="hidden items-center justify-center gap-1 lg:gap-2 xl:gap-4 md:flex flex-1 mx-2 relative">
+          {navItems.map((item) => {
+            const isProdutos = item.label === "Produtos";
+            return (
+              <div 
+                key={item.href}
+                className="relative h-full flex items-center py-2"
+                onMouseEnter={isProdutos ? handleMouseEnterProducts : undefined}
+                onMouseLeave={isProdutos ? handleMouseLeaveProducts : undefined}
+              >
+                <Link
+                  href={item.href}
+                  className={cn(
+                    "relative rounded-full px-4 py-2 lg:px-5 lg:py-2.5 text-[13px] lg:text-[14px] xl:text-[15px] font-bold tracking-wide uppercase transition-all duration-300 whitespace-nowrap flex items-center gap-1",
+                    pathname === item.href || (isProdutos && showMegaMenu)
+                      ? "bg-[#00b1f4] text-white shadow-md shadow-[#00b1f4]/30 scale-105" 
+                      : "text-[#154687] hover:bg-sky-50 hover:text-[#00b1f4]"
+                  )}
+                >
+                  {item.label}
+                  {isProdutos && <ChevronDown size={16} className={cn("transition-transform duration-300", showMegaMenu ? "rotate-180" : "rotate-0")} />}
+                </Link>
+              </div>
+            );
+          })}
         </nav>
 
         {/* Redes Sociais (Direita) */}
@@ -162,6 +200,46 @@ export default function Header() {
           {open ? <X size={22} /> : <Menu size={22} />}
         </Button>
       </div>
+
+      {/* Mega Menu Produtos */}
+      {showMegaMenu && (
+        <div 
+          className="absolute left-0 top-full w-full bg-[#154687] text-white shadow-xl border-t border-white/20 transition-all duration-300 animate-in fade-in slide-in-from-top-4 hidden md:block"
+          onMouseEnter={handleMouseEnterProducts}
+          onMouseLeave={handleMouseLeaveProducts}
+        >
+          <div className="mx-auto max-w-5xl px-6 py-8 flex justify-center gap-12 lg:gap-20">
+            {productCategories.map(cat => {
+               const catProducts = productsByCategory[cat] || [];
+               if (catProducts.length === 0) return null;
+               const firstImage = catProducts[0].image || "/logo.png";
+               return (
+                 <div key={cat} className="flex flex-col items-center w-48">
+                    <Link href="/produtos" onClick={() => setShowMegaMenu(false)} className="group flex flex-col items-center">
+                      <div className="w-24 h-24 relative mb-4 group-hover:scale-110 transition-transform duration-300">
+                         <Image src={firstImage} alt={cat} fill sizes="100px" className="object-contain drop-shadow-md" />
+                      </div>
+                      <h4 className="font-bold text-lg mb-2 group-hover:text-sky-300 transition-colors">{cat}</h4>
+                    </Link>
+                    <div className="w-full h-[1px] bg-white/30 mb-4"></div>
+                    <ul className="flex flex-col gap-2 text-sm text-center text-white/80">
+                      {catProducts.slice(0, 6).map(p => (
+                        <li key={p.id} className="hover:text-white cursor-pointer transition-colors">
+                          <Link href="/produtos" onClick={() => setShowMegaMenu(false)}>- {p.name}</Link>
+                        </li>
+                      ))}
+                      {catProducts.length > 6 && (
+                        <li className="hover:text-white cursor-pointer transition-colors mt-1 font-semibold text-sky-300">
+                          <Link href="/produtos" onClick={() => setShowMegaMenu(false)}>+ Ver todos</Link>
+                        </li>
+                      )}
+                    </ul>
+                 </div>
+               );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Menu Mobile */}
       {open && (

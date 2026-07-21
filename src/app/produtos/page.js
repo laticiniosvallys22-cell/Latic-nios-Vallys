@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
 import { Badge } from "@/components/ui/badge";
+import PageHero from "@/components/PageHero";
 import { productCategories, getCategoryStyle } from "@/interfaces/catalog";
 import { useProducts } from "@/hooks/useProducts";
 
@@ -40,21 +41,24 @@ export default function ProductsPage() {
   }, [category, productsByCategory]);
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
-      {/* Header styled to match reference layout */}
-      <div className="flex flex-col items-center text-center mb-10">
-        <Badge>Catálogo Completo</Badge>
-        <h1 className="mt-4 text-4xl font-extrabold text-[#7c1421] uppercase tracking-tight">
-          Nossas Linhas
-        </h1>
-        <p className="mt-2 max-w-xl text-muted text-sm md:text-base">
-          Conheça todos os nossos queijos, bebidas lácteas e manteigas produzidos com o mais puro sabor da fazenda.
-        </p>
-        <div className="mt-4 flex h-[4px] w-[120px] rounded-full overflow-hidden">
-          <div className="w-1/2 bg-orange-500"></div>
-          <div className="w-1/2 bg-[#7c1421]"></div>
+    <main className="bg-[#e8f1f6] min-h-screen pb-16">
+      <PageHero title="Produtos" waveColor="#e8f1f6" />
+      
+      {/* Ícones Decorativos */}
+      <div className="flex justify-center items-center gap-16 md:gap-32 py-6 md:py-10">
+        {/* Usando imagens que já existem ou placeholders estilizados como ícones minimalistas */}
+        <div className="w-10 h-10 md:w-12 md:h-12 relative opacity-80 hover:opacity-100 transition-opacity hover:scale-110 duration-300">
+          <Image src="/icons/bebidas.png" alt="Leite" fill className="object-contain drop-shadow-sm" />
+        </div>
+        <div className="w-12 h-12 md:w-16 md:h-16 relative opacity-80 hover:opacity-100 transition-opacity hover:scale-110 duration-300">
+          <Image src="/icons/queijos.png" alt="Queijo" fill className="object-contain drop-shadow-sm" />
+        </div>
+        <div className="w-10 h-10 md:w-12 md:h-12 relative opacity-80 hover:opacity-100 transition-opacity hover:scale-110 duration-300">
+          <Image src="/icons/manteigas.png" alt="Manteiga" fill className="object-contain drop-shadow-sm" />
         </div>
       </div>
+
+      <section className="mx-auto max-w-7xl px-6 py-4 lg:px-8">
 
       {/* Filter Buttons */}
       <div className="mb-12 flex flex-wrap justify-center gap-2">
@@ -111,7 +115,7 @@ export default function ProductsPage() {
                 </div>
 
                 {/* Grid layout wrapper */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full place-items-center sm:place-items-stretch">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full place-items-center sm:place-items-stretch">
                   {items.map((product) => (
                     <div key={product.id} className="w-full flex">
                       <ProductCard product={product} isProductPage={true} />
@@ -123,6 +127,7 @@ export default function ProductsPage() {
           })}
         </div>
       )}
-    </section>
+      </section>
+    </main>
   );
 }

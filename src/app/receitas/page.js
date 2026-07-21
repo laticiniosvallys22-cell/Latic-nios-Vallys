@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Clock, ChefHat, DollarSign, ArrowLeft } from "lucide-react";
 import RecipeCard from "@/components/RecipeCard";
+import PageHero from "@/components/PageHero";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { recipeCategories } from "@/interfaces/catalog";
@@ -184,15 +185,9 @@ function RecipesContent() {
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
-      <div className="mb-8 max-w-2xl">
-        <Badge variant="accent">Receitas</Badge>
-        <h1 className="mt-4 text-4xl font-semibold">Cozinha Vallys</h1>
-        <p className="mt-4 text-lg leading-8 text-muted">
-          Ideias simples para transformar produtos lácteos em pratos de rotina,
-          lanches e sobremesas.
-        </p>
-      </div>
+    <>
+      <PageHero title="Receitas" />
+      <section className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
 
       <div className="mb-8 grid gap-4 lg:grid-cols-[1fr_320px]">
         <div className="flex flex-wrap gap-2">
@@ -224,6 +219,7 @@ function RecipesContent() {
         ))}
       </div>
     </section>
+    </>
   );
 }
 

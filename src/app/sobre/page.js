@@ -20,6 +20,7 @@ import { useState, useEffect } from "react";
 import { useAboutImages } from "@/hooks/useAboutImages";
 import { cn } from "@/lib/utils";
 import AboutImageCarousel from "@/components/AboutImageCarousel";
+import PageHero from "@/components/PageHero";
 
 const valuesList = [
   { icon: ShieldCheck, title: "Qualidade e Segurança", text: "Garantimos produtos lácteos que atendem aos mais altos padrões de qualidade, segurança alimentar e excelência." },
@@ -230,6 +231,7 @@ export default function AboutPage() {
 
   return (
     <>
+      <PageHero title="Sobre Nós" />
       {style === "style1" && renderStyle1()}
       {style === "style2" && renderStyle2()}
       {style === "style3" && renderStyle3()}

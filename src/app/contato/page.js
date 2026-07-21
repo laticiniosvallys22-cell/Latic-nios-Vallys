@@ -3,6 +3,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import PageHero from "@/components/PageHero";
 
 const InstagramIcon = ({ size = 18 }) => (
   <svg
@@ -34,7 +35,9 @@ const WhatsAppIcon = ({ size = 22 }) => (
 
 export default function ContactPage() {
   return (
-    <section className="mx-auto grid max-w-7xl gap-8 px-6 py-14 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
+    <>
+      <PageHero title="Contato" />
+      <section className="mx-auto grid max-w-7xl gap-8 px-6 py-14 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
       <div>
         <Badge variant="accent">Contato</Badge>
         <h1 className="mt-4 text-4xl font-semibold text-[#1a1a4e]">Fale com a Vallys</h1>
@@ -98,5 +101,6 @@ export default function ContactPage() {
         </CardContent>
       </Card>
     </section>
+    </>
   );
 }

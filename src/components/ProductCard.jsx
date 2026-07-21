@@ -23,12 +23,12 @@ export default function ProductCard({ product, isProductPage = false }) {
   };
 
   const renderCardStyle1 = () => (
-    <article className="group relative w-full flex flex-col items-center justify-center text-center px-4 py-5 sm:py-8 lg:p-6 lg:h-[380px] select-none cursor-pointer" onClick={() => setShowModal(true)}>
+    <article className="group relative z-0 w-full flex flex-col items-center justify-center text-center px-4 py-5 sm:py-8 lg:p-6 lg:h-[440px] select-none cursor-pointer" onClick={() => setShowModal(true)}>
       {/* Card background (always visible so it works on /produtos on mobile) */}
-      <div className={`absolute inset-0 rounded-[2rem] ${style.cardBg} lg:shadow-sm transition-all duration-300 -z-10`} />
+      <div className={`absolute inset-0 rounded-none ${style.cardBg} lg:shadow-sm transition-all duration-300 -z-10`} />
 
       {/* Product Image */}
-      <div className={`relative w-full ${isProductPage ? "h-[180px] sm:h-[200px] mb-3 sm:mb-4" : "h-[240px] sm:h-[300px] mb-4 sm:mb-8"} lg:h-[180px] lg:mb-4 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center`}>
+      <div className={`relative w-full ${isProductPage ? "h-[220px] sm:h-[260px] mb-3 sm:mb-4" : "h-[280px] sm:h-[340px] mb-4 sm:mb-8"} lg:h-[260px] lg:mb-4 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center`}>
         <Image src={product.image || "/logo.png"} alt={product.name} fill sizes="(max-width: 768px) 100vw, 400px" className="object-contain drop-shadow-2xl lg:drop-shadow-lg" />
       </div>
       
@@ -45,7 +45,7 @@ export default function ProductCard({ product, isProductPage = false }) {
         </h3>
         
         {/* Button */}
-        <button type="button" className={`border-[3px] border-white text-white font-bold tracking-wider hover:bg-white hover:text-slate-900 transition-colors duration-300 shadow-sm active:scale-95 ${isProductPage ? "px-5 py-2.5 text-sm sm:px-6" : "px-8 py-2.5 text-base sm:px-12 sm:py-3.5 sm:text-lg"} lg:w-full lg:mt-auto lg:py-2.5 lg:bg-white/20 lg:border-[2px] lg:border-white lg:hover:bg-white lg:hover:text-[#1a1a4e] lg:text-white lg:text-sm lg:rounded-xl lg:tracking-normal`}>
+        <button type="button" className={`border-[3px] border-white text-white font-bold tracking-wider hover:bg-white hover:text-slate-900 transition-colors duration-300 shadow-sm active:scale-95 ${isProductPage ? "px-5 py-2.5 text-sm sm:px-6" : "px-8 py-2.5 text-base sm:px-12 sm:py-3.5 sm:text-lg"} lg:w-full lg:mt-auto lg:py-2.5 lg:bg-white/20 lg:border-[2px] lg:border-white lg:hover:bg-white lg:hover:text-[#1a1a4e] lg:text-white lg:text-sm rounded-none lg:tracking-normal`}>
           <span className="lg:hidden">SAIBA MAIS</span>
           <span className="hidden lg:inline">Detalhes</span>
         </button>
