@@ -55,7 +55,11 @@ export default function ProductsPage() {
   };
 
   return (
-    <main className="bg-[#e8f1f6] min-h-screen">
+    <main 
+      className="bg-[#e8f1f6] min-h-screen relative"
+      style={{ backgroundImage: "url('/dairy-pattern.png')", backgroundSize: "400px", backgroundRepeat: "repeat", backgroundPosition: "center" }}
+    >
+      <div className="absolute inset-0 bg-white/60 pointer-events-none z-0"></div>
       {/* Hero Section */}
       <div className="relative w-full h-[480px] sm:h-[520px] lg:h-[560px] overflow-hidden">
         {/* Background Image */}
@@ -122,7 +126,7 @@ export default function ProductsPage() {
       </div>
 
       {/* Content */}
-      <section className="mx-auto max-w-7xl px-6 pt-10 pb-20 lg:px-8">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pt-10 pb-20 lg:px-8">
 
         {loading && <p className="text-center text-muted py-12">Carregando catálogo...</p>}
         {error && <p className="text-center text-red-600 py-12">Erro: {error.message}</p>}

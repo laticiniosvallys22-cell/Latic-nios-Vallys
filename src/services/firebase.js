@@ -130,10 +130,17 @@ export async function logoutAdmin() {
 }
 
 // Caching helper functions (safe for Server Side Rendering)
+// Bump this version when demo/fallback data changes to invalidate stale caches
+const CACHE_VERSION = "v2";
+
+function versionedKey(key) {
+  return `${key}_${CACHE_VERSION}`;
+}
+
 function getStoredCache(key) {
   if (typeof window === "undefined") return null;
   try {
-    const data = sessionStorage.getItem(key);
+    const data = sessionStorage.getItem(versionedKey(key));
     return data ? JSON.parse(data) : null;
   } catch (e) {
     return null;
@@ -143,7 +150,7 @@ function getStoredCache(key) {
 function setStoredCache(key, value) {
   if (typeof window === "undefined") return;
   try {
-    sessionStorage.setItem(key, JSON.stringify(value));
+    sessionStorage.setItem(versionedKey(key), JSON.stringify(value));
   } catch (e) {
     // Ignore quota/security errors
   }
@@ -152,7 +159,7 @@ function setStoredCache(key, value) {
 function clearStoredCache(key) {
   if (typeof window === "undefined") return;
   try {
-    sessionStorage.removeItem(key);
+    sessionStorage.removeItem(versionedKey(key));
   } catch (e) {
     // Ignore
   }

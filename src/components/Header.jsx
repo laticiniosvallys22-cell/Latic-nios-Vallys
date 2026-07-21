@@ -7,7 +7,8 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useProducts } from "@/hooks/useProducts";
-import { productCategories } from "@/interfaces/catalog";
+import { useRecipes } from "@/hooks/useRecipes";
+import { productCategories, recipeCategories } from "@/interfaces/catalog";
 import Image from "next/image";
 
 const navItems = [
@@ -41,8 +42,11 @@ export default function Header() {
   // "drop" = caindo de cima pra posição | "idle" = no lugar | "falling" = caindo pra baixo da tela
   const [logoState, setLogoState] = useState("hidden");
   const [showMegaMenu, setShowMegaMenu] = useState(false);
+  const [showRecipesMegaMenu, setShowRecipesMegaMenu] = useState(false);
   const megaMenuTimeoutRef = useRef(null);
+  const recipesMenuTimeoutRef = useRef(null);
   const { products } = useProducts();
+  const { recipes } = useRecipes();
 
   const productsByCategory = useMemo(() => {
     const groups = {};
@@ -55,14 +59,37 @@ export default function Header() {
     return groups;
   }, [products]);
 
+  const recipesByCategory = useMemo(() => {
+    const groups = {};
+    recipes.forEach((recipe) => {
+      const cat = recipe.category || "Outros";
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(recipe);
+    });
+    return groups;
+  }, [recipes]);
+
   const handleMouseEnterProducts = () => {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
+    setShowRecipesMegaMenu(false);
     setShowMegaMenu(true);
   };
 
   const handleMouseLeaveProducts = () => {
     megaMenuTimeoutRef.current = setTimeout(() => {
       setShowMegaMenu(false);
+    }, 200);
+  };
+
+  const handleMouseEnterRecipes = () => {
+    if (recipesMenuTimeoutRef.current) clearTimeout(recipesMenuTimeoutRef.current);
+    setShowMegaMenu(false);
+    setShowRecipesMegaMenu(true);
+  };
+
+  const handleMouseLeaveRecipes = () => {
+    recipesMenuTimeoutRef.current = setTimeout(() => {
+      setShowRecipesMegaMenu(false);
     }, 200);
   };
 
@@ -154,24 +181,27 @@ export default function Header() {
         <nav className="hidden items-center justify-center gap-1 lg:gap-2 xl:gap-4 md:flex flex-1 mx-2 relative">
           {navItems.map((item) => {
             const isProdutos = item.label === "Produtos";
+            const isReceitas = item.label === "Receitas";
+            const hasDropdown = isProdutos || isReceitas;
+            const isDropdownOpen = (isProdutos && showMegaMenu) || (isReceitas && showRecipesMegaMenu);
             return (
               <div 
                 key={item.href}
                 className="relative h-full flex items-center py-2"
-                onMouseEnter={isProdutos ? handleMouseEnterProducts : undefined}
-                onMouseLeave={isProdutos ? handleMouseLeaveProducts : undefined}
+                onMouseEnter={isProdutos ? handleMouseEnterProducts : isReceitas ? handleMouseEnterRecipes : undefined}
+                onMouseLeave={isProdutos ? handleMouseLeaveProducts : isReceitas ? handleMouseLeaveRecipes : undefined}
               >
                 <Link
                   href={item.href}
                   className={cn(
                     "relative rounded-full px-4 py-2 lg:px-5 lg:py-2.5 text-[13px] lg:text-[14px] xl:text-[15px] font-bold tracking-wide uppercase transition-all duration-300 whitespace-nowrap flex items-center gap-1",
-                    pathname === item.href || (isProdutos && showMegaMenu)
+                    pathname === item.href || isDropdownOpen
                       ? "bg-[#00b1f4] text-white shadow-md shadow-[#00b1f4]/30 scale-105" 
                       : "text-[#154687] hover:bg-sky-50 hover:text-[#00b1f4]"
                   )}
                 >
                   {item.label}
-                  {isProdutos && <ChevronDown size={16} className={cn("transition-transform duration-300", showMegaMenu ? "rotate-180" : "rotate-0")} />}
+                  {hasDropdown && <ChevronDown size={16} className={cn("transition-transform duration-300", isDropdownOpen ? "rotate-180" : "rotate-0")} />}
                 </Link>
               </div>
             );
@@ -231,6 +261,46 @@ export default function Header() {
                       {catProducts.length > 6 && (
                         <li className="hover:text-white cursor-pointer transition-colors mt-1 font-semibold text-sky-300">
                           <Link href="/produtos" onClick={() => setShowMegaMenu(false)}>+ Ver todos</Link>
+                        </li>
+                      )}
+                    </ul>
+                 </div>
+               );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Mega Menu Receitas */}
+      {showRecipesMegaMenu && (
+        <div 
+          className="absolute left-0 top-full w-full bg-[#8b1a1a] text-white shadow-xl border-t border-white/20 transition-all duration-300 animate-in fade-in slide-in-from-top-4 hidden md:block"
+          onMouseEnter={handleMouseEnterRecipes}
+          onMouseLeave={handleMouseLeaveRecipes}
+        >
+          <div className="mx-auto max-w-5xl px-6 py-8 flex justify-center gap-12 lg:gap-16">
+            {recipeCategories.map(cat => {
+               const catRecipes = recipesByCategory[cat] || [];
+               if (catRecipes.length === 0) return null;
+               const firstImage = catRecipes[0].image || "/logo.png";
+               return (
+                 <div key={cat} className="flex flex-col items-center w-48">
+                    <Link href={`/receitas`} onClick={() => setShowRecipesMegaMenu(false)} className="group flex flex-col items-center">
+                      <div className="w-20 h-20 relative mb-3 group-hover:scale-110 transition-transform duration-300">
+                         <Image src={firstImage} alt={cat} fill sizes="80px" className="object-contain drop-shadow-md rounded-lg" />
+                      </div>
+                      <h4 className="font-bold text-base mb-2 group-hover:text-amber-300 transition-colors">{cat}</h4>
+                    </Link>
+                    <div className="w-full h-[1px] bg-white/30 mb-3"></div>
+                    <ul className="flex flex-col gap-1.5 text-sm text-center text-white/80">
+                      {catRecipes.slice(0, 4).map(r => (
+                        <li key={r.id} className="hover:text-white cursor-pointer transition-colors">
+                          <Link href={`/receitas?id=${r.id}`} onClick={() => setShowRecipesMegaMenu(false)}>- {r.title}</Link>
+                        </li>
+                      ))}
+                      {catRecipes.length > 4 && (
+                        <li className="hover:text-white cursor-pointer transition-colors mt-1 font-semibold text-amber-300">
+                          <Link href="/receitas" onClick={() => setShowRecipesMegaMenu(false)}>+ Ver todas</Link>
                         </li>
                       )}
                     </ul>

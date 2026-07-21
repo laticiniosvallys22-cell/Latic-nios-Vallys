@@ -34,7 +34,7 @@ export default function AboutImageCarousel() {
   }
 
   return (
-    <div className="w-full py-12 sm:py-16 -mx-6 sm:mx-0 w-[calc(100%+3rem)] sm:w-full" onMouseEnter={() => setIsPlaying(false)} onMouseLeave={() => setIsPlaying(true)}>
+    <div className="relative left-1/2 -translate-x-1/2 w-screen sm:w-full sm:left-0 sm:translate-x-0 py-12 sm:py-16" onMouseEnter={() => setIsPlaying(false)} onMouseLeave={() => setIsPlaying(true)}>
       <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-8 sm:mb-12 uppercase tracking-tight px-6 sm:px-0">Nossa Galeria</h2>
         

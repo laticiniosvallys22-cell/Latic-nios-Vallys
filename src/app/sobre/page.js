@@ -55,7 +55,7 @@ export default function AboutPage() {
   const renderStyle1 = () => (
     <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
       <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="relative overflow-hidden rounded-none border border-gray-200/80 shadow-xl aspect-[4/3] group">
+        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="relative overflow-hidden rounded-none border border-gray-200/80 shadow-xl aspect-[4/3] group -mx-6 sm:mx-0">
           <AnimatePresence mode="wait">
             <motion.div key={activeAboutImage} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0">
               <Image src={activeAboutImage} alt="Equipe e Fábrica Laticínios Vallys" fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 600px" priority />

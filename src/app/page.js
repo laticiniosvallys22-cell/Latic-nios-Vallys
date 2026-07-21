@@ -144,8 +144,13 @@ export default function Home() {
       )}
 
       {/* SEÇÃO DE LINHAS DE PRODUTOS */}
-      <section className="py-20 w-full overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col items-center text-center mb-24">
+      <section
+        className="py-20 w-full overflow-hidden relative"
+        style={{ backgroundImage: "url('/dairy-pattern.png')", backgroundSize: "400px", backgroundRepeat: "repeat", backgroundPosition: "center" }}
+      >
+        <div className="absolute inset-0 bg-white/60 pointer-events-none"></div>
+        <div className="relative z-10 w-full">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col items-center text-center mb-24">
           <div className="flex flex-col items-center justify-center text-[#00b1f4] mb-4">
              <motion.div
                animate={{ y: [0, -6, 0] }}
@@ -249,6 +254,7 @@ export default function Home() {
             );
           })
         )}
+        </div>
       </section>
 
       {/* SEÇÃO SOBRE (Resumo Dinâmico) */}

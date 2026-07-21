@@ -71,11 +71,20 @@ function RecipesContent() {
       if (n.includes("leite")) return "🥛";
       if (n.includes("manteiga")) return "🧈";
       if (n.includes("queijo") || n.includes("mussarela")) return "🧀";
-      if (n.includes("carne")) return "🥩";
+      if (n.includes("carne") || n.includes("presunto")) return "🥩";
       if (n.includes("farinha") || n.includes("milharina")) return "🌽";
       if (n.includes("mandioca")) return "🍠";
       if (n.includes("cebola")) return "🧅";
       if (n.includes("alho")) return "🧄";
+      if (n.includes("ovo")) return "🥚";
+      if (n.includes("tapioca") || n.includes("polvilho")) return "🫓";
+      if (n.includes("goiabada")) return "🟥";
+      if (n.includes("mel")) return "🍯";
+      if (n.includes("maracujá") || n.includes("maracuja")) return "🍊";
+      if (n.includes("açúcar") || n.includes("acucar") || n.includes("leite condensado")) return "🍬";
+      if (n.includes("creme de leite")) return "🥛";
+      if (n.includes("orégano") || n.includes("oregano") || n.includes("hortelã") || n.includes("hortela")) return "🌿";
+      if (n.includes("óleo") || n.includes("oleo")) return "🫗";
       return "🔸";
     };
 
@@ -83,7 +92,10 @@ function RecipesContent() {
       const keywords = [
         "sal", "água", "agua", "leite", "manteiga", "requeijão", "requeijao", 
         "mussarela", "queijo", "mandioca", "carne seca", "cebola", "alho",
-        "cuscuzeira", "forno", "panela", "refratário", "refratario", "fogo", "vapor"
+        "cuscuzeira", "forno", "panela", "refratário", "refratario", "fogo", "vapor",
+        "tapioca", "polvilho", "presunto", "goiabada", "mel", "maracujá", "maracuja",
+        "açúcar", "acucar", "leite condensado", "creme de leite", "orégano", "oregano",
+        "hortelã", "hortela", "geladeira", "micro-ondas", "frigideira", "liquidificador"
       ];
       
       let result = text;

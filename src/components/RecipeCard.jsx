@@ -9,13 +9,13 @@ export default function RecipeCard({ recipe }) {
       className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
     >
       {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-[#fef3e2] via-[#fde8cc] to-[#f9d9b0]">
         <Image
           src={recipe.image || "/logo.png"}
           alt={recipe.title}
           fill
           sizes="(max-width: 768px) 100vw, 400px"
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 drop-shadow-lg"
         />
       </div>
 
