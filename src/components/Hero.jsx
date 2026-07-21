@@ -160,7 +160,7 @@ export default function Hero({ slides, heroStyle }) {
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white uppercase leading-none drop-shadow-sm">
                       <Typewriter key={`title-${currentSlide}`} text={slide.titleLeft} speed={50} delay={200} showCursor={false} />
                     </h2>
-                    <span className="font-caveat text-yellow-300 text-4xl sm:text-5xl md:text-6xl tracking-wide rotate-[-2.5deg] inline-block drop-shadow-md origin-left pt-1">
+                    <span className="font-caveat text-[#154687] text-4xl sm:text-5xl md:text-6xl tracking-wide rotate-[-2.5deg] inline-block drop-shadow-md origin-left pt-1">
                       <Typewriter key={`sub-${currentSlide}`} text={slide.subtitleLeft} speed={45} delay={900} showCursor={false} />
                     </span>
                   </div>
