@@ -202,7 +202,11 @@ function RecipesContent() {
   }
 
   return (
-    <main className="bg-[#faf5f0] min-h-screen">
+    <main 
+      className="bg-[#faf5f0] min-h-screen relative"
+      style={{ backgroundImage: "url('/dairy-pattern.png')", backgroundSize: "400px", backgroundRepeat: "repeat", backgroundPosition: "center" }}
+    >
+      <div className="absolute inset-0 bg-white/60 pointer-events-none z-0"></div>
       {/* Hero Section - Full width background image with overlay */}
       <div className="relative w-full h-[500px] sm:h-[550px] lg:h-[600px] overflow-hidden">
         {/* Background Image */}
@@ -267,7 +271,7 @@ function RecipesContent() {
       </div>
 
       {/* Section Title */}
-      <div className="mx-auto max-w-7xl px-6 pt-14 pb-2">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 pt-14 pb-2">
         <div className="flex items-center justify-center gap-4">
           <div className="flex-1 h-[1px] bg-[#d4c4b0]"></div>
           <h2 className="font-caveat text-3xl sm:text-4xl text-[#5a2d0c] font-bold italic whitespace-nowrap">
@@ -278,7 +282,7 @@ function RecipesContent() {
       </div>
 
       {/* Recipe Grid */}
-      <section className="mx-auto max-w-7xl px-6 py-8 pb-20">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-8 pb-20">
         {filteredRecipes.length === 0 && (
           <p className="text-center text-gray-400 py-12 text-lg">Nenhuma receita encontrada.</p>
         )}
