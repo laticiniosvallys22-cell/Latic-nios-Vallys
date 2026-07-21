@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mail, MapPin, Phone } from "lucide-react";
 
 const WhatsAppIcon = () => (
@@ -21,8 +24,22 @@ const FacebookIcon = () => (
 );
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  let footerBgClass = "bg-[#00b1f4] border-sky-300/30";
+
+  if (pathname?.startsWith("/receitas")) {
+    footerBgClass = "bg-[#7c1421] border-red-950/40";
+  } else if (pathname?.startsWith("/trabalhe-conosco")) {
+    footerBgClass = "bg-[#0e4a3a] border-emerald-950/40";
+  } else if (pathname?.startsWith("/contato")) {
+    footerBgClass = "bg-[#154687] border-blue-950/40";
+  } else if (pathname?.startsWith("/sobre") || pathname?.startsWith("/produtos")) {
+    footerBgClass = "bg-[#1a2a6c] border-blue-950/40";
+  }
+
   return (
-    <footer className="border-t border-sky-300/30 bg-[#00b1f4] text-white">
+    <footer className={`border-t text-white transition-colors duration-500 ${footerBgClass}`}>
       {/* Grid Principal do Rodapé */}
       <div className="mx-auto max-w-7xl grid gap-12 px-6 py-16 md:grid-cols-[1.5fr_0.8fr_0.8fr_0.9fr] lg:px-8">
         

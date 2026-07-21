@@ -65,18 +65,20 @@ export default function Home() {
     return highlights.length > 0 ? highlights : demoHighlights;
   }, [highlights]);
 
-  const [expandedCategories, setExpandedCategories] = useState({});
+  const [expandedCategories, setExpandedCategories] = useState({
+    "Bebidas Lácteas": true,
+  });
 
   useEffect(() => {
     if (products.length > 0) {
-      const initial = {};
+      const initial = { "Bebidas Lácteas": true };
       products.forEach((product) => {
         let cat = product.category || "Outros";
         if (cat === "Iogurtes") {
           cat = "Bebidas Lácteas";
         }
         if (initial[cat] === undefined) {
-          initial[cat] = false;
+          initial[cat] = cat === "Bebidas Lácteas";
         }
       });
       setExpandedCategories(initial);
