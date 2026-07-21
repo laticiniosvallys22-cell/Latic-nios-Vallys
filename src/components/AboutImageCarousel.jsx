@@ -38,7 +38,7 @@ export default function AboutImageCarousel() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <h2 className="text-3xl font-extrabold text-center mb-12 uppercase tracking-tight">Nossa Galeria</h2>
         
-        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-none overflow-hidden shadow-xl bg-gray-150 border border-gray-200">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -65,25 +65,23 @@ export default function AboutImageCarousel() {
 
           {images.length > 1 && (
             <>
-              <div className="absolute inset-y-0 left-0 flex items-center z-20">
+              <div className="absolute inset-y-0 left-4 flex items-center z-20">
                 <button
                   onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-                  className="bg-white/90 text-[#1a1a4e] flex items-center justify-start h-[60px] sm:h-[80px] md:h-[100px] w-[30px] sm:w-[40px] md:w-[50px] hover:w-[40px] sm:hover:w-[50px] md:hover:w-[60px] transition-all duration-300 shadow-[5px_0_20px_rgba(0,0,0,0.15)] pl-0 sm:pl-1"
-                  style={{ borderRadius: '0 100% 100% 0 / 0 50% 50% 0' }}
+                  className="bg-[#1a2a6c] text-white flex items-center justify-center h-12 w-12 hover:bg-[#154687] transition-all duration-300 shadow-md cursor-pointer border border-white/10"
                   aria-label="Anterior"
                 >
-                  <ChevronLeft size={28} className="stroke-[3]" />
+                  <ChevronLeft size={24} className="stroke-[3]" />
                 </button>
               </div>
 
-              <div className="absolute inset-y-0 right-0 flex items-center z-20">
+              <div className="absolute inset-y-0 right-4 flex items-center z-20">
                 <button
                   onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-                  className="bg-white/90 text-[#1a1a4e] flex items-center justify-end h-[60px] sm:h-[80px] md:h-[100px] w-[30px] sm:w-[40px] md:w-[50px] hover:w-[40px] sm:hover:w-[50px] md:hover:w-[60px] transition-all duration-300 shadow-[-5px_0_20px_rgba(0,0,0,0.15)] pr-0 sm:pr-1"
-                  style={{ borderRadius: '100% 0 0 100% / 50% 0 0 50%' }}
+                  className="bg-[#1a2a6c] text-white flex items-center justify-center h-12 w-12 hover:bg-[#154687] transition-all duration-300 shadow-md cursor-pointer border border-white/10"
                   aria-label="Próximo"
                 >
-                  <ChevronRight size={28} className="stroke-[3]" />
+                  <ChevronRight size={24} className="stroke-[3]" />
                 </button>
               </div>
 
@@ -92,8 +90,8 @@ export default function AboutImageCarousel() {
                   <button
                     key={idx}
                     onClick={() => setCurrentIndex(idx)}
-                    className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      currentIndex === idx ? "w-8 bg-amber-500" : "w-2.5 bg-white/50 hover:bg-white/80"
+                    className={`h-1.5 transition-all duration-300 cursor-pointer ${
+                      currentIndex === idx ? "w-8 bg-amber-500" : "w-3 bg-white/50 hover:bg-white/80"
                     }`}
                   />
                 ))}

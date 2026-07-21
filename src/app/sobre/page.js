@@ -55,7 +55,7 @@ export default function AboutPage() {
   const renderStyle1 = () => (
     <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
       <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="relative overflow-hidden rounded-2xl shadow-xl aspect-[4/3] group">
+        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="relative overflow-hidden rounded-none border border-gray-200/80 shadow-xl aspect-[4/3] group">
           <AnimatePresence mode="wait">
             <motion.div key={activeAboutImage} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0">
               <Image src={activeAboutImage} alt="Equipe e Fábrica Laticínios Vallys" fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 600px" priority />
@@ -65,29 +65,29 @@ export default function AboutPage() {
         </motion.div>
         <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.15 }} className="space-y-6">
           <div className="space-y-2">
-            <Badge>Nossa História</Badge>
-            <h1 className="text-4xl font-extrabold text-[#7c1421] uppercase tracking-tight">Laticínios Vallys</h1>
-            <div className="h-[4px] w-[80px] bg-[#7c1421] rounded-full"></div>
+            <Badge className="rounded-none bg-[#1a2a6c]/10 text-[#1a2a6c] hover:bg-[#1a2a6c]/20 px-3 py-1 font-bold text-xs uppercase tracking-wider">Nossa História</Badge>
+            <h2 className="text-4xl font-extrabold text-[#1a2a6c] uppercase tracking-tight">Laticínios Vallys</h2>
+            <div className="h-[4px] w-[80px] bg-[#1a2a6c]"></div>
           </div>
           <div className="space-y-4 text-base leading-relaxed text-muted font-medium">
             <p>{settings?.aboutHistoryText1 || "Fundado em 2007, o Laticínios Vallys vem, desde então, investindo continuamente na modernização de sua estrutura, na inovação de seus processos e na utilização de equipamentos de alta tecnologia. Nosso compromisso é oferecer produtos de excelência, levando aos consumidores qualidade, sabor e confiança em cada produto."}</p>
             <p>{settings?.aboutHistoryText2 || "Temos orgulho de fazer parte da história de Lajinha (MG), contribuindo para o desenvolvimento da região e consolidando nossa marca como referência no setor de laticínios."}</p>
           </div>
           <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-100">
-            <div className="text-center"><span className="block text-2xl font-extrabold text-[#00b1f4]">2007</span><span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Fundação</span></div>
-            <div className="text-center"><span className="block text-2xl font-extrabold text-[#00b1f4]">Lajinha</span><span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Origem (MG)</span></div>
-            <div className="text-center"><span className="block text-2xl font-extrabold text-[#00b1f4]">100%</span><span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Qualidade</span></div>
+            <div className="text-center"><span className="block text-2xl font-extrabold text-[#154687]">2007</span><span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Fundação</span></div>
+            <div className="text-center"><span className="block text-2xl font-extrabold text-[#154687]">Lajinha</span><span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Origem (MG)</span></div>
+            <div className="text-center"><span className="block text-2xl font-extrabold text-[#154687]">100%</span><span className="text-xs text-muted font-bold uppercase tracking-wider font-semibold">Qualidade</span></div>
           </div>
         </motion.div>
       </div>
 
       <div className="mt-24 grid gap-8 md:grid-cols-2">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm hover:shadow-md transition-shadow duration-300 space-y-4">
-          <div className="flex items-center gap-3"><div className="inline-flex items-center justify-center p-3 bg-amber-500/10 rounded-xl text-amber-500"><Target size={24} /></div><h2 className="text-2xl font-bold text-foreground">Missão</h2></div>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="rounded-none border-l-4 border-l-amber-500 border-y border-r border-gray-150 bg-white p-8 shadow-sm hover:shadow-md transition-shadow duration-300 space-y-4">
+          <div className="flex items-center gap-3"><div className="inline-flex items-center justify-center p-3 bg-amber-500/10 rounded-none text-amber-500"><Target size={24} /></div><h2 className="text-2xl font-bold text-foreground">Missão</h2></div>
           <p className="text-muted leading-relaxed font-medium">{settings?.aboutMission || "Produzir alimentos lácteos com excelência, segurança e qualidade, proporcionando aos nossos consumidores uma experiência única de sabor e confiança. Atuamos de forma ética e responsável, fortalecendo parcerias duradouras com nossos produtores e valorizando nossos colaboradores por meio do desenvolvimento profissional, pessoal e humano, contribuindo para o crescimento de todos que fazem parte da nossa história."}</p>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.15 }} className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm hover:shadow-md transition-shadow duration-300 space-y-4">
-          <div className="flex items-center gap-3"><div className="inline-flex items-center justify-center p-3 bg-blue-500/10 rounded-xl text-blue-500"><Eye size={24} /></div><h2 className="text-2xl font-bold text-foreground">Visão</h2></div>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.15 }} className="rounded-none border-l-4 border-l-[#1a2a6c] border-y border-r border-gray-150 bg-white p-8 shadow-sm hover:shadow-md transition-shadow duration-300 space-y-4">
+          <div className="flex items-center gap-3"><div className="inline-flex items-center justify-center p-3 bg-[#1a2a6c]/10 rounded-none text-[#1a2a6c]"><Eye size={24} /></div><h2 className="text-2xl font-bold text-foreground">Visão</h2></div>
           <p className="text-muted leading-relaxed font-medium">{settings?.aboutVision || "Ser referência como uma das principais indústrias de laticínios de Minas Gerais e região, destacando-se pela qualidade dos nossos produtos, inovação, eficiência na gestão e compromisso com a satisfação dos clientes. Buscamos também valorizar nossos colaboradores e manter relações sólidas, justas e confiáveis com os produtores rurais da nossa região."}</p>
         </motion.div>
       </div>
@@ -96,18 +96,18 @@ export default function AboutPage() {
 
       <div className="mt-24 border-t border-gray-100 pt-16">
         <div className="flex flex-col items-center text-center mb-16">
-          <Badge>Nossos Valores</Badge>
+          <Badge className="rounded-none bg-[#1a2a6c]/10 text-[#1a2a6c] hover:bg-[#1a2a6c]/20 px-3 py-1 font-bold text-xs uppercase tracking-wider">Nossos Valores</Badge>
           <h2 className="mt-3 text-3xl font-extrabold text-foreground uppercase tracking-tight">Valores</h2>
           <p className="mt-2 text-muted font-bold tracking-wide">Princípios que orientam o nosso trabalho</p>
-          <div className="mt-3 flex h-[4px] w-[100px] rounded-full overflow-hidden"><div className="w-1/2 bg-orange-500"></div><div className="w-1/2 bg-[#7c1421]"></div></div>
+          <div className="mt-3 flex h-[4px] w-[100px] overflow-hidden"><div className="w-1/2 bg-sky-400"></div><div className="w-1/2 bg-[#1a2a6c]"></div></div>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {valuesList.map((val, i) => {
             const Icon = val.icon;
             return (
-              <motion.article key={val.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: (i % 4) * 0.1 }} className="rounded-2xl border border-gray-50 bg-white p-6 shadow-xs hover:shadow-md transition-shadow duration-300 flex flex-col justify-between">
+              <motion.article key={val.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: (i % 4) * 0.1 }} className="rounded-none border border-gray-200/80 border-t-4 border-t-[#1a2a6c]/80 bg-white p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300 flex flex-col justify-between">
                 <div>
-                  <div className="inline-flex items-center justify-center p-3 bg-[#00b1f4]/5 rounded-xl text-[#00b1f4] mb-4"><Icon size={22} /></div>
+                  <div className="inline-flex items-center justify-center p-3 bg-[#1a2a6c]/5 rounded-none text-[#1a2a6c] mb-4"><Icon size={22} /></div>
                   <h3 className="text-lg font-bold text-foreground leading-snug">{val.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted font-medium">{val.text}</p>
                 </div>
