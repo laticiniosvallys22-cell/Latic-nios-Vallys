@@ -141,7 +141,7 @@ export default function Hero({ slides, heroStyle }) {
               >
                 {slide.badge && (
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-                    <Sparkles size={12} className="text-yellow-300 fill-yellow-300 animate-pulse" />
+                    <Sparkles size={12} className="text-[#154687] fill-[#154687] animate-pulse" />
                     {slide.badge}
                   </div>
                 )}
@@ -185,7 +185,7 @@ export default function Hero({ slides, heroStyle }) {
         </button>
         <div className="absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 gap-2">
           {slides.map((_, index) => (
-            <button key={index} onClick={(e) => { e.stopPropagation(); setCurrentSlide(index); }} className={`h-2.5 rounded-full cursor-pointer transition-all duration-300 ${currentSlide === index ? "w-8 bg-yellow-300" : "w-2.5 bg-white/40 hover:bg-white/60"}`} aria-label={`Ir para slide ${index + 1}`} />
+            <button key={index} onClick={(e) => { e.stopPropagation(); setCurrentSlide(index); }} className={`h-2.5 rounded-full cursor-pointer transition-all duration-300 ${currentSlide === index ? "w-8 bg-[#154687]" : "w-2.5 bg-white/40 hover:bg-white/60"}`} aria-label={`Ir para slide ${index + 1}`} />
           ))}
         </div>
       </section>
