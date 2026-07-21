@@ -109,7 +109,7 @@ function RecipesContent() {
     };
 
     return (
-      <section className="mx-auto max-w-3xl px-6 py-14 lg:px-8">
+      <section className="relative z-10 mx-auto max-w-3xl px-6 py-14 lg:px-8">
         {/* Back Link */}
         <button
           onClick={() => router.push("/receitas")}
