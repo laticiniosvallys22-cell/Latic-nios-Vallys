@@ -21,6 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { candidateSchema } from "@/lib/validations";
 import { saveCandidate } from "@/services/firebase";
 import { motion } from "framer-motion";
+import PageHero from "@/components/PageHero";
 
 const areasList = [
   { value: "producao", label: "Produção e Indústria" },
@@ -98,28 +99,20 @@ ${data.message}`;
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-      {/* Cabeçalho */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <Badge className="bg-sky-100 text-[#00b1f4] hover:bg-sky-100/80 px-3 py-1 font-bold text-xs uppercase tracking-wider rounded-full">
-          Carreira Vallys
-        </Badge>
-        <h1 className="mt-4 text-4xl md:text-5xl font-extrabold text-[#1a1a4e] tracking-tight uppercase">
-          Trabalhe Conosco
-        </h1>
-        <p className="mt-4 text-lg text-gray-500 font-medium leading-relaxed">
-          Venha fazer parte de uma equipe dedicada a levar o verdadeiro sabor da fazenda para milhares de famílias. Buscamos pessoas apaixonadas por excelência e comprometidas em crescer com a gente!
-        </p>
-        <div className="mt-4 flex justify-center">
-          <div className="h-[4px] w-[80px] bg-[#00b1f4] rounded-full"></div>
-        </div>
-      </div>
+    <>
+      <PageHero 
+        title="Trabalhe Conosco" 
+        subtitle="Venha fazer parte de uma equipe dedicada a levar o verdadeiro sabor da fazenda para milhares de famílias."
+        bgImage="/hero.png"
+        bgColor="#0e4a3a"
+      />
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
 
       <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
         {/* Lado Esquerdo: Pilares e Informações */}
         <div className="space-y-10">
           <div>
-            <h2 className="text-2xl font-bold text-[#1a1a4e] mb-6">Por que trabalhar no Laticínio Vallys?</h2>
+            <h2 className="text-2xl font-bold text-[#0e4a3a] mb-6">Por que trabalhar no Laticínio Vallys?</h2>
             <div className="grid gap-6">
               {pillars.map((pillar, i) => {
                 const Icon = pillar.icon;
@@ -129,13 +122,13 @@ ${data.message}`;
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: i * 0.1 }}
-                    className="flex gap-4 p-5 rounded-2xl border border-sky-50/50 bg-sky-50/10 hover:bg-sky-50/20 transition-colors"
+                    className="flex gap-4 p-5 rounded-2xl border border-emerald-50/50 bg-emerald-50/10 hover:bg-emerald-50/30 transition-colors"
                   >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#00b1f4]/10 text-[#00b1f4]">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-600/10 text-emerald-600">
                       <Icon size={24} />
                     </div>
                     <div>
-                      <h3 className="font-bold text-[#1a1a4e] text-lg">{pillar.title}</h3>
+                      <h3 className="font-bold text-[#0e4a3a] text-lg">{pillar.title}</h3>
                       <p className="mt-1 text-sm text-gray-500 leading-relaxed font-medium">{pillar.description}</p>
                     </div>
                   </motion.div>
@@ -146,14 +139,14 @@ ${data.message}`;
 
           {/* Alternativas de Contato */}
           <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-            <h3 className="font-bold text-[#1a1a4e] text-base mb-4">Canais Alternativos</h3>
+            <h3 className="font-bold text-[#0e4a3a] text-base mb-4">Canais Alternativos</h3>
             <p className="text-sm text-gray-500 mb-6 font-medium leading-relaxed">
               Caso prefira, você também pode enviar o seu currículo diretamente para o nosso e-mail ou tirar dúvidas através de nossa equipe comercial.
             </p>
             <div className="space-y-4">
               <a 
                 href="mailto:laticiniosvallys08@hotmail.com" 
-                className="flex items-center gap-3 text-sm font-semibold text-gray-600 hover:text-[#00b1f4] transition-colors"
+                className="flex items-center gap-3 text-sm font-semibold text-gray-600 hover:text-emerald-600 transition-colors"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-50 border border-gray-100 text-gray-500">
                   <Mail size={16} />
@@ -181,9 +174,9 @@ ${data.message}`;
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Card className="border border-sky-100 bg-sky-50/10 p-4 sm:p-6 rounded-[24px]">
+          <Card className="border border-emerald-100 bg-emerald-50/10 p-4 sm:p-6 rounded-[24px]">
             <CardHeader className="pb-4">
-              <CardTitle className="text-2xl font-bold text-[#1a1a4e]">Formulário de Candidatura</CardTitle>
+              <CardTitle className="text-2xl font-bold text-[#0e4a3a]">Formulário de Candidatura</CardTitle>
               <CardDescription className="text-sm font-medium text-gray-500">
                 Preencha os campos abaixo com suas informações profissionais.
               </CardDescription>
@@ -192,11 +185,11 @@ ${data.message}`;
               <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5">
                 {/* Nome */}
                 <div className="grid gap-2">
-                  <Label htmlFor="name" className="text-[#1a1a4e] font-semibold text-sm">Nome Completo</Label>
+                  <Label htmlFor="name" className="text-[#0e4a3a] font-semibold text-sm">Nome Completo</Label>
                   <Input 
                     id="name" 
                     placeholder="Seu nome" 
-                    className="border-sky-100 focus:border-[#00b1f4] focus:ring-1 focus:ring-[#00b1f4] bg-white rounded-xl"
+                    className="border-emerald-100 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white rounded-xl"
                     {...register("name")} 
                   />
                   {errors.name && <p className="text-xs font-bold text-red-500">{errors.name.message}</p>}
@@ -205,7 +198,7 @@ ${data.message}`;
                 <div className="grid gap-5 sm:grid-cols-2">
                   {/* E-mail */}
                   <div className="grid gap-2">
-                    <Label htmlFor="email" className="text-[#1a1a4e] font-semibold text-sm">E-mail</Label>
+                    <Label htmlFor="email" className="text-[#0e4a3a] font-semibold text-sm">E-mail</Label>
                     <Input 
                       id="email" 
                       type="email" 
@@ -218,7 +211,7 @@ ${data.message}`;
 
                   {/* Telefone */}
                   <div className="grid gap-2">
-                    <Label htmlFor="phone" className="text-[#1a1a4e] font-semibold text-sm">Telefone / WhatsApp</Label>
+                    <Label htmlFor="phone" className="text-[#0e4a3a] font-semibold text-sm">Telefone / WhatsApp</Label>
                     <Input 
                       id="phone" 
                       placeholder="(33) 99999-9999" 
@@ -232,10 +225,10 @@ ${data.message}`;
                 <div className="grid gap-5 sm:grid-cols-2">
                   {/* Área de Interesse */}
                   <div className="grid gap-2">
-                    <Label htmlFor="area" className="text-[#1a1a4e] font-semibold text-sm">Área de Interesse</Label>
+                    <Label htmlFor="area" className="text-[#0e4a3a] font-semibold text-sm">Área de Interesse</Label>
                     <select
                       id="area"
-                      className="flex h-10 w-full rounded-xl border border-sky-100 bg-white px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 focus:border-[#00b1f4] focus:ring-1 focus:ring-[#00b1f4] text-gray-700"
+                      className="flex h-10 w-full rounded-xl border border-emerald-100 bg-white px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-gray-700"
                       {...register("area")}
                     >
                       <option value="">Selecione uma área...</option>
@@ -250,7 +243,7 @@ ${data.message}`;
 
                   {/* Link do Currículo */}
                   <div className="grid gap-2">
-                    <Label htmlFor="resumeLink" className="text-[#1a1a4e] font-semibold text-sm flex items-center gap-1.5">
+                    <Label htmlFor="resumeLink" className="text-[#0e4a3a] font-semibold text-sm flex items-center gap-1.5">
                       Link do Currículo
                       <span className="text-xs font-normal text-gray-400">(Opcional)</span>
                     </Label>
@@ -258,7 +251,7 @@ ${data.message}`;
                       <Input 
                         id="resumeLink" 
                         placeholder="Link do PDF ou LinkedIn" 
-                        className="border-sky-100 focus:border-[#00b1f4] focus:ring-1 focus:ring-[#00b1f4] bg-white rounded-xl pl-8"
+                        className="border-emerald-100 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white rounded-xl pl-8"
                         {...register("resumeLink")} 
                       />
                       <Link2 className="absolute left-2.5 top-3 h-4 w-4 text-gray-400" />
@@ -269,11 +262,11 @@ ${data.message}`;
 
                 {/* Mensagem / Apresentação */}
                 <div className="grid gap-2">
-                  <Label htmlFor="message" className="text-[#1a1a4e] font-semibold text-sm">Apresentação / Mensagem</Label>
+                  <Label htmlFor="message" className="text-[#0e4a3a] font-semibold text-sm">Apresentação / Mensagem</Label>
                   <Textarea 
                     id="message" 
                     placeholder="Fale um pouco sobre você, sua experiência e por que deseja trabalhar no Laticínio Vallys..." 
-                    className="border-sky-100 focus:border-[#00b1f4] focus:ring-1 focus:ring-[#00b1f4] bg-white rounded-xl min-h-[120px] resize-y"
+                    className="border-emerald-100 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white rounded-xl min-h-[120px] resize-y"
                     {...register("message")} 
                   />
                   {errors.message && <p className="text-xs font-bold text-red-500">{errors.message.message}</p>}
@@ -283,7 +276,7 @@ ${data.message}`;
                 <Button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="bg-[#00b1f4] hover:bg-[#009bd6] text-white font-extrabold py-5 rounded-xl text-base shadow-md transition-all hover:scale-[1.01] active:scale-95 duration-200 cursor-pointer mt-2"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-5 rounded-xl text-base shadow-md transition-all hover:scale-[1.01] active:scale-95 duration-200 cursor-pointer mt-2"
                 >
                   {isSubmitting ? "Enviando candidatura..." : "Enviar Candidatura"}
                 </Button>
@@ -293,5 +286,6 @@ ${data.message}`;
         </motion.div>
       </div>
     </section>
+    </>
   );
 }

@@ -231,7 +231,12 @@ export default function AboutPage() {
 
   return (
     <>
-      <PageHero title="Sobre Nós" />
+      <PageHero 
+        title="Sobre Nós" 
+        subtitle="Conheça a história, missão e valores do Laticínios Vallys."
+        bgImage="/hero.png"
+        bgColor="#1a2a6c"
+      />
       {style === "style1" && renderStyle1()}
       {style === "style2" && renderStyle2()}
       {style === "style3" && renderStyle3()}

@@ -36,7 +36,12 @@ const WhatsAppIcon = ({ size = 22 }) => (
 export default function ContactPage() {
   return (
     <>
-      <PageHero title="Contato" />
+      <PageHero 
+        title="Contato" 
+        subtitle="Para pedidos, parcerias ou dúvidas, fale com a gente!"
+        bgImage="/hero.png"
+        bgColor="#154687"
+      />
       <section className="mx-auto grid max-w-7xl gap-8 px-6 py-14 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
       <div>
         <Badge variant="accent">Contato</Badge>

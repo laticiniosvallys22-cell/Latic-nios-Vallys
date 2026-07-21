@@ -1,7 +1,30 @@
-export default function PageHero({ title, waveColor = "#ffffff" }) {
+import Image from "next/image";
+
+export default function PageHero({ title, subtitle, bgImage, bgColor = "#2c3384", overlayGradient, waveColor = "#ffffff" }) {
   return (
-    <div className="relative w-full overflow-hidden bg-[#2c3384] pt-8 lg:pt-0">
-      {/* Background Pattern */}
+    <div className="relative w-full h-[400px] sm:h-[440px] lg:h-[480px] overflow-hidden">
+      {/* Background Image (if provided) */}
+      {bgImage && (
+        <div className="absolute inset-0">
+          <Image
+            src={bgImage}
+            alt={title}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      )}
+
+      {/* Overlay */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: overlayGradient || `linear-gradient(135deg, ${bgColor}ee 0%, ${bgColor}cc 50%, ${bgColor}aa 100%)`
+        }}
+      ></div>
+
+      {/* Pattern */}
       <div 
         className="absolute inset-0 opacity-[0.03]" 
         style={{ 
@@ -9,22 +32,22 @@ export default function PageHero({ title, waveColor = "#ffffff" }) {
         }}
       ></div>
 
-      <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-center px-6 lg:px-8 py-16 lg:py-32 z-10">
-        
-        {/* Center: Text */}
-        <div className="flex flex-col items-center justify-center w-full z-20">
-          <h1 className="font-caveat text-7xl sm:text-8xl lg:text-[140px] text-white font-bold leading-[0.8] drop-shadow-xl -rotate-2">
-            {title}
-          </h1>
-        </div>
-
+      {/* Content */}
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 text-center">
+        <h1 className="font-caveat text-6xl sm:text-7xl lg:text-[120px] text-white font-bold leading-[0.85] drop-shadow-xl italic">
+          {title}
+        </h1>
+        {subtitle && (
+          <p className="mt-5 text-white/80 text-base sm:text-lg max-w-xl font-medium">
+            {subtitle}
+          </p>
+        )}
       </div>
 
       {/* Wave Separator */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-30 translate-y-[2px]">
         <svg
-          className="relative block w-full h-[40px] sm:h-[60px] lg:h-[90px]"
-          data-name="Layer 1"
+          className="relative block w-full h-[40px] sm:h-[60px] lg:h-[80px]"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"

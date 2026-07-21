@@ -1,46 +1,42 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, CookingPot } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Clock } from "lucide-react";
 
 export default function RecipeCard({ recipe }) {
   return (
     <Link 
       href={`/receitas?id=${recipe.id}`}
-      className="grid overflow-hidden rounded-[8px] border border-border bg-white shadow-sm md:grid-cols-[0.85fr_1.15fr] hover:shadow-md transition-shadow cursor-pointer duration-200"
+      className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-accent/5 md:aspect-auto">
+      {/* Image */}
+      <div className="relative aspect-[4/3] overflow-hidden">
         <Image
-          src={recipe.image || "/globe.svg"}
+          src={recipe.image || "/logo.png"}
           alt={recipe.title}
           fill
-          sizes="(max-width: 768px) 100vw, 350px"
-          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 400px"
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
       </div>
-      <div className="grid gap-4 p-5">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="accent">{recipe.category}</Badge>
-          <span className="inline-flex items-center gap-1 text-xs font-medium text-muted">
-            <Clock size={14} />
-            {recipe.prepTime}
-          </span>
-          <span className="inline-flex items-center gap-1 text-xs font-medium text-muted">
-            <CookingPot size={14} />
-            {recipe.difficulty}
-          </span>
+
+      {/* Content */}
+      <div className="p-5 space-y-2">
+        {/* Title + Time */}
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-lg font-extrabold text-[#5a2d0c] leading-snug group-hover:text-[#8b1a1a] transition-colors line-clamp-2">
+            {recipe.title}
+          </h3>
+          {recipe.prepTime && (
+            <div className="flex items-center gap-1 shrink-0 text-[#8b1a1a]">
+              <Clock size={14} />
+              <span className="text-xs font-bold whitespace-nowrap">{recipe.prepTime}</span>
+            </div>
+          )}
         </div>
-        <div>
-          <h3 className="text-xl font-semibold text-gray-900 group-hover:text-accent transition-colors">{recipe.title}</h3>
-          <p className="mt-2 text-sm leading-6 text-muted">
-            {recipe.description}
-          </p>
-        </div>
-        <p className="line-clamp-2 text-sm text-muted">
-          <strong className="text-foreground">Ingredientes:</strong>{" "}
-          {Array.isArray(recipe.ingredients)
-            ? recipe.ingredients.join(", ")
-            : recipe.ingredients}
+
+        {/* Description */}
+        <p className="text-sm leading-relaxed text-gray-500 line-clamp-3">
+          {recipe.description}
         </p>
       </div>
     </Link>
