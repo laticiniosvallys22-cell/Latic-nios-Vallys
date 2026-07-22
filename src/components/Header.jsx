@@ -154,14 +154,21 @@ export default function Header() {
         <div className="w-[70%] bg-[#00b1f4]"></div>
       </div>
 
-      <div className="mx-auto flex h-[76px] md:h-[96px] max-w-7xl items-center justify-between px-6 lg:px-8">
+      <div className={cn(
+        "mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 transition-all duration-300",
+        scrolled ? "h-[56px] md:h-[96px]" : "h-[76px] md:h-[96px]"
+      )}>
         {/* Logo (Esquerda) — Cai, balança, e ao clicar cai e volta */}
-        <div className="relative flex w-[120px] md:w-[180px] shrink-0 justify-start items-start pt-1 md:pt-2 h-full">
+        <div className={cn(
+          "relative flex shrink-0 justify-start items-start h-full transition-all duration-300",
+          scrolled ? "w-[90px] pt-0.5 md:w-[180px] md:pt-2" : "w-[120px] pt-1 md:w-[180px] md:pt-2"
+        )}>
           <button
             onClick={handleLogoClick}
             onAnimationEnd={handleFallEnd}
             className={cn(
-              "relative z-20 block w-[85px] md:w-[115px] h-[114px] md:h-[154px] select-none cursor-pointer bg-transparent border-none p-0 focus:outline-none",
+              "relative z-20 block select-none cursor-pointer bg-transparent border-none p-0 focus:outline-none transition-all duration-300",
+              scrolled ? "w-[62px] h-[83px] md:w-[115px] md:h-[154px]" : "w-[85px] h-[114px] md:w-[115px] md:h-[154px]",
               logoState === "hidden" && "opacity-0",
               logoState === "drop" && "animate-tag-drop",
               logoState === "idle" && "animate-tag-swing",
