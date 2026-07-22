@@ -3,6 +3,7 @@ import { Toaster } from "sonner";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SettingsProvider } from "@/contexts/SettingsContext";
+
 import "./globals.css";
 
 const geistSans = Geist({

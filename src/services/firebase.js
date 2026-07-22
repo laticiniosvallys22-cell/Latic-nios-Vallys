@@ -175,6 +175,12 @@ export async function getProducts() {
   return data;
 }
 
+export async function getProductById(id) {
+  const products = await getProducts();
+  return products.find((p) => p.id === id) || null;
+}
+
+
 export async function createProduct(product) {
   if (!db) {
     throw new Error("Configure o Firebase para salvar produtos.");
