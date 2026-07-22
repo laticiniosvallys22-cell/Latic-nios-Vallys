@@ -12,14 +12,29 @@ import { cn } from "@/lib/utils";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
+
+  // Tenta carregar o produto síncronamente do sessionStorage para renderizar no frame 0 (sem tela branca/piscada)
+  const [product, setProduct] = useState(() => {
+    if (typeof window === "undefined") return null;
+    try {
+      const cached = sessionStorage.getItem("vallys_products_v2");
+      if (cached) {
+        const list = JSON.parse(cached);
+        return list.find((p) => p.id === id) || null;
+      }
+    } catch (e) {}
+    return null;
+  });
+
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!product);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      setLoading(true);
+      if (!product) {
+        setLoading(true);
+      }
       setError(null);
       try {
         const [foundProduct, allProducts] = await Promise.all([
@@ -27,34 +42,39 @@ export default function ProductDetailPage() {
           getProducts(),
         ]);
 
-        if (!foundProduct) {
+        if (!foundProduct && !product) {
           setError("Produto não encontrado.");
           return;
         }
 
-        setProduct(foundProduct);
+        if (foundProduct) {
+          setProduct(foundProduct);
+        }
 
         // Produtos relacionados: mesma categoria, excluindo o atual
-        let cat = foundProduct.category;
+        const currentCat = (foundProduct || product)?.category;
+        let cat = currentCat;
         if (cat === "Iogurtes") cat = "Bebidas Lácteas";
 
         const related = allProducts
           .filter((p) => {
             const pCat = p.category === "Iogurtes" ? "Bebidas Lácteas" : p.category;
-            return pCat === cat && p.id !== foundProduct.id;
+            return pCat === cat && p.id !== (foundProduct || product)?.id;
           })
           .slice(0, 4);
 
         setRelatedProducts(related);
       } catch (err) {
-        setError(err.message || "Erro ao carregar produto.");
+        if (!product) {
+          setError(err.message || "Erro ao carregar produto.");
+        }
       } finally {
         setLoading(false);
       }
     }
 
     fetchData();
-  }, [id]);
+  }, [id, product]);
 
   const style = useMemo(
     () => (product ? getCategoryStyle(product.category) : null),
@@ -76,20 +96,20 @@ export default function ProductDetailPage() {
     return match ? match[0] : "#1a2a6c";
   }, [style]);
 
-  // ─── Loading ──────────────────────────────────────────────────
-  if (loading) {
+  // ─── Loading Apenas se não houver produto em cache ─────────────
+  if (loading && !product) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-[#f5f7ff]">
+      <main className="min-h-screen flex items-center justify-center bg-[#1a2a6c]">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-sky-200 border-t-[#00b1f4] rounded-full animate-spin" />
-          <p className="text-[#1a2a6c] font-semibold text-sm">Carregando produto...</p>
+          <p className="text-white font-semibold text-sm">Carregando produto...</p>
         </div>
       </main>
     );
   }
 
   // ─── Erro / Não encontrado ────────────────────────────────────
-  if (error || !product) {
+  if (error && !product) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-[#f5f7ff] px-6">
         <div className="text-center max-w-md">
@@ -115,11 +135,11 @@ export default function ProductDetailPage() {
   }
 
   const displayCategory =
-    product.category === "Iogurtes" || product.category === "Iogurte"
+    product?.category === "Iogurtes" || product?.category === "Iogurte"
       ? "Bebida Láctea"
-      : product.category;
+      : product?.category;
 
-  // ─── Página de detalhes ───────────────────────────────────────
+  // ─── Página de detalhes (Sem tela branca/piscada no carregamento) ─────────
   return (
     <main className="min-h-screen bg-[#f5f7ff]">
       {/* ── Breadcrumb ─────────────────────────────────────────── */}
@@ -135,7 +155,7 @@ export default function ProductDetailPage() {
             </Link>
             <ChevronRight size={14} className="text-gray-300" />
             <span className="text-[#1a2a6c] font-semibold truncate max-w-[200px]">
-              {product.name}
+              {product?.name}
             </span>
           </nav>
         </div>
@@ -172,12 +192,12 @@ export default function ProductDetailPage() {
               <motion.div
                 initial={{ x: "-100vw", opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1] }}
+                transition={{ duration: 1.0, ease: [0.25, 1, 0.5, 1] }}
                 className="relative w-full h-full z-10"
               >
                 <Image
-                  src={product.image || "/logo.png"}
-                  alt={product.name}
+                  src={product?.image || "/logo.png"}
+                  alt={product?.name || "Produto"}
                   fill
                   sizes="(max-width: 768px) 90vw, 500px"
                   className="object-contain drop-shadow-2xl p-4"
@@ -198,19 +218,19 @@ export default function ProductDetailPage() {
                 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-tight mb-5 drop-shadow-sm"
                 style={{ fontFamily: '"Arial Rounded MT Bold", "Nunito", sans-serif' }}
               >
-                {product.name}
+                {product?.name}
               </h1>
 
               {/* Preço */}
               <p className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-yellow-300 mb-8 drop-shadow-sm">
-                {product.price || "Sob Consulta"}
+                {product?.price || "Sob Consulta"}
               </p>
 
               {/* Separador */}
               <div className="w-16 h-[2px] bg-white/30 mx-auto lg:mx-0 mb-8" />
 
               {/* Descrição */}
-              {product.description && (
+              {product?.description && (
                 <p className="text-base sm:text-lg text-white/85 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-10">
                   {product.description}
                 </p>
