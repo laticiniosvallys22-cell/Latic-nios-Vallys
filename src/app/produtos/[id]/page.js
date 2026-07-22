@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { ArrowLeft, MessageCircle, Package, ChevronRight } from "lucide-react";
 import { getProductById, getProducts } from "@/services/firebase";
 import { getCategoryStyle } from "@/interfaces/catalog";
@@ -161,21 +162,28 @@ export default function ProductDetailPage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 py-12 lg:py-20">
-            {/* Imagem do produto */}
+            {/* Imagem do produto - Entra pela esquerda da tela até a posição correta */}
             <div className="relative w-full max-w-[420px] lg:max-w-[500px] aspect-square flex-shrink-0">
               {/* Glow atrás do produto */}
               <div
                 className="absolute inset-[15%] rounded-full blur-3xl opacity-20"
                 style={{ backgroundColor: "#ffffff" }}
               />
-              <Image
-                src={product.image || "/logo.png"}
-                alt={product.name}
-                fill
-                sizes="(max-width: 768px) 90vw, 500px"
-                className="object-contain drop-shadow-2xl relative z-10 p-4"
-                priority
-              />
+              <motion.div
+                initial={{ x: "-100vw", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1] }}
+                className="relative w-full h-full z-10"
+              >
+                <Image
+                  src={product.image || "/logo.png"}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 768px) 90vw, 500px"
+                  className="object-contain drop-shadow-2xl p-4"
+                  priority
+                />
+              </motion.div>
             </div>
 
             {/* Informações */}

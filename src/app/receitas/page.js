@@ -3,6 +3,7 @@
 import { useMemo, useState, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Clock, ChefHat, DollarSign, ArrowLeft, Search, Coffee, UtensilsCrossed, Sandwich, CakeSlice } from "lucide-react";
 import RecipeCard from "@/components/RecipeCard";
@@ -131,7 +132,12 @@ function RecipesContent() {
             </p>
           </div>
           {selectedRecipe.image && (
-            <div className="relative w-full max-w-[280px] aspect-[4/3] bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center p-2 shadow-inner shrink-0 border border-gray-100">
+            <motion.div
+              initial={{ x: "-100vw", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1] }}
+              className="relative w-full max-w-[280px] aspect-[4/3] bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center p-2 shadow-inner shrink-0 border border-gray-100"
+            >
               <Image
                 src={selectedRecipe.image}
                 alt={selectedRecipe.title}
@@ -139,7 +145,7 @@ function RecipesContent() {
                 className="object-contain"
                 sizes="280px"
               />
-            </div>
+            </motion.div>
           )}
         </div>
 

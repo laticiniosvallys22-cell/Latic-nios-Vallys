@@ -165,14 +165,13 @@ export default function ProductsPage() {
                     <div className="flex-1 h-[1px] bg-[#c8d8e8]"></div>
                   </div>
 
-                  {/* Grid layout wrapper */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full place-items-center sm:place-items-stretch">
-                    {items.map((product) => (
-                      <div key={product.id} className="w-full flex">
-                        <ProductCard product={product} isProductPage={true} />
-                      </div>
-                    ))}
-                  </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full place-items-center sm:place-items-stretch">
+                      {items.map((product) => (
+                        <div key={product.id} className="w-full flex flex-col relative z-0 focus-within:z-50">
+                          <ProductCard product={product} isProductPage={true} />
+                        </div>
+                      ))}
+                    </div>
                 </div>
               );
             })}

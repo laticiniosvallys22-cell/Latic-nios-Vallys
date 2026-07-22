@@ -1,7 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { getCategoryStyle } from "@/interfaces/catalog";
 import { cn } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
@@ -10,18 +13,57 @@ export default function ProductCard({ product, isProductPage = false }) {
   const style = getCategoryStyle(product.category);
   const { settings } = useSettings();
   const productsStyle = settings?.productsStyle || "style1";
+  const router = useRouter();
+  const [isExitingRight, setIsExitingRight] = useState(false);
 
   const productUrl = `/produtos/${product.id}`;
 
+  const handleCardClick = (e) => {
+    e.preventDefault();
+    if (isExitingRight) return;
+    setIsExitingRight(true);
+  };
+
+  const handleAnimationComplete = () => {
+    if (isExitingRight) {
+      router.push(productUrl);
+    }
+  };
+
+  const imageExitAnimation = {
+    x: isExitingRight ? "100vw" : 0,
+    opacity: isExitingRight ? 0 : 1,
+    scale: isExitingRight ? 1.05 : 1,
+  };
+
+  const imageExitTransition = {
+    duration: 0.9,
+    ease: [0.25, 1, 0.5, 1],
+  };
+
   const renderCardStyle1 = () => (
-    <Link href={productUrl} className="block w-full">
-      <article className="group/card relative z-0 w-full flex flex-col items-center justify-center text-center px-4 py-5 sm:py-8 lg:p-6 lg:h-[440px] select-none cursor-pointer">
+    <Link href={productUrl} onClick={handleCardClick} className={`block w-full ${isExitingRight ? "relative z-[99999]" : "relative z-0"}`}>
+      <article className={`group/card relative w-full flex flex-col items-center justify-center text-center px-4 py-5 sm:py-8 lg:p-6 lg:h-[440px] select-none cursor-pointer ${isExitingRight ? "z-[99999] !overflow-visible" : "z-0"}`}>
         {/* Card background */}
         <div className={`absolute inset-0 rounded-sm ${style.cardBg} lg:shadow-sm transition-all duration-300 -z-10`} />
 
-        {/* Product Image */}
-        <div className={`relative w-full ${isProductPage ? "h-[220px] sm:h-[260px] mb-3 sm:mb-4" : "h-[280px] sm:h-[340px] mb-4 sm:mb-8"} lg:h-[260px] lg:mb-4 transition-transform duration-500 ease-out flex items-center justify-center group-hover/card:scale-105 group-hover/card:-translate-y-3 group-hover/card:-rotate-2`}>
-          <Image src={product.image || "/logo.png"} alt={product.name} fill sizes="(max-width: 768px) 100vw, 400px" className="object-contain drop-shadow-2xl lg:drop-shadow-lg" />
+        {/* Product Image with Hover Tilt & Lift Effect */}
+        <div className={`relative w-full ${isProductPage ? "h-[220px] sm:h-[260px] mb-3 sm:mb-4" : "h-[280px] sm:h-[340px] mb-4 sm:mb-8"} lg:h-[260px] lg:mb-4 transition-transform duration-500 ease-out flex items-center justify-center group-hover/card:scale-105 group-hover/card:-translate-y-3 group-hover/card:-rotate-2 ${isExitingRight ? "z-[99999] !overflow-visible" : "z-10"}`}>
+          <motion.div
+            animate={imageExitAnimation}
+            transition={imageExitTransition}
+            onAnimationComplete={handleAnimationComplete}
+            className="relative w-full h-full flex items-center justify-center"
+            style={{ zIndex: 99999 }}
+          >
+            <Image
+              src={product.image || "/logo.png"}
+              alt={product.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="object-contain drop-shadow-2xl lg:drop-shadow-lg"
+            />
+          </motion.div>
         </div>
         
         <div className="lg:w-full lg:text-left lg:flex lg:flex-col lg:items-start lg:mt-auto lg:flex-grow lg:justify-end">
@@ -47,11 +89,19 @@ export default function ProductCard({ product, isProductPage = false }) {
   );
 
   const renderCardStyle2 = () => (
-    <Link href={productUrl} className="block w-full">
-      <article className={cn("group w-full rounded-[2rem] p-6 cursor-pointer hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-white shadow-sm flex flex-col justify-between h-[380px]", style.cardBg)}>
+    <Link href={productUrl} onClick={handleCardClick} className={`block w-full ${isExitingRight ? "relative z-[99999]" : "relative z-0"}`}>
+      <article className={cn("group w-full rounded-[2rem] p-6 cursor-pointer hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-white shadow-sm flex flex-col justify-between h-[380px]", style.cardBg, isExitingRight ? "relative z-[99999] !overflow-visible" : "overflow-hidden")}>
         <div className="flex flex-col items-center">
-          <div className="relative w-full h-[200px] mb-4 group-hover:scale-110 transition-transform duration-500">
-            <Image src={product.image || "/logo.png"} alt={product.name} fill sizes="(max-width: 768px) 100vw, 350px" className="object-contain drop-shadow-lg" />
+          <div className={`relative w-full h-[200px] mb-4 group-hover:scale-110 transition-transform duration-500 ${isExitingRight ? "z-[99999] !overflow-visible" : "z-10"}`}>
+            <motion.div
+              animate={imageExitAnimation}
+              transition={imageExitTransition}
+              onAnimationComplete={handleAnimationComplete}
+              className="relative w-full h-full"
+              style={{ zIndex: 99999 }}
+            >
+              <Image src={product.image || "/logo.png"} alt={product.name} fill sizes="(max-width: 768px) 100vw, 350px" className="object-contain drop-shadow-lg" />
+            </motion.div>
           </div>
           <div className="text-center w-full">
             <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-bold text-white mb-2 backdrop-blur-sm uppercase">{product.category}</span>
@@ -64,16 +114,22 @@ export default function ProductCard({ product, isProductPage = false }) {
   );
 
   const renderCardStyle3 = () => (
-    <Link href={productUrl} className="block w-full">
+    <Link href={productUrl} onClick={handleCardClick} className={`block w-full ${isExitingRight ? "relative z-[99999]" : "relative z-0"}`}>
       <article 
-        className="group relative w-full h-[420px] rounded-[2rem] bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.12)] transition-all duration-500 cursor-pointer border border-gray-100 flex flex-col overflow-hidden"
+        className={cn("group relative w-full h-[420px] rounded-[2rem] bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.12)] transition-all duration-500 cursor-pointer border border-gray-100 flex flex-col", isExitingRight ? "relative z-[99999] !overflow-visible" : "overflow-hidden")}
       >
         <div className="absolute top-0 inset-x-0 h-[60%] bg-gradient-to-b from-gray-50 to-white z-0 group-hover:scale-105 transition-transform duration-700" />
         
-        <div className="relative z-10 w-full h-[55%] flex items-center justify-center p-8 mt-4 group-hover:-translate-y-4 transition-transform duration-500 ease-out">
-          <div className="relative w-full h-full group-hover:scale-110 transition-transform duration-700">
+        <div className={`relative z-10 w-full h-[55%] flex items-center justify-center p-8 mt-4 group-hover:-translate-y-4 transition-transform duration-500 ease-out ${isExitingRight ? "z-[99999] !overflow-visible" : ""}`}>
+          <motion.div
+            animate={imageExitAnimation}
+            transition={imageExitTransition}
+            onAnimationComplete={handleAnimationComplete}
+            className="relative w-full h-full group-hover:scale-110 transition-transform duration-700"
+            style={{ zIndex: 99999 }}
+          >
             <Image src={product.image || "/logo.png"} alt={product.name} fill sizes="(max-width: 768px) 100vw, 350px" className="object-contain drop-shadow-xl" />
-          </div>
+          </motion.div>
         </div>
         
         <div className="relative z-20 flex-grow bg-white px-8 pb-8 pt-4 flex flex-col justify-end">
@@ -100,10 +156,10 @@ export default function ProductCard({ product, isProductPage = false }) {
   );
 
   return (
-    <>
+    <div className={`w-full ${isExitingRight ? "relative z-[99999] !overflow-visible" : "relative z-0"}`}>
       {productsStyle === "style1" && renderCardStyle1()}
       {productsStyle === "style2" && renderCardStyle2()}
       {productsStyle === "style3" && renderCardStyle3()}
-    </>
+    </div>
   );
 }
