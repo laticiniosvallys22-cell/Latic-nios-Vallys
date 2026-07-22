@@ -8,62 +8,54 @@ import { motion } from "framer-motion";
 import { ArrowLeft, MessageCircle, Package, ChevronRight } from "lucide-react";
 import { getProductById, getProducts } from "@/services/firebase";
 import { getCategoryStyle } from "@/interfaces/catalog";
-import { cn } from "@/lib/utils";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Tenta carregar o produto síncronamente do sessionStorage para renderizar no frame 0 (sem tela branca/piscada)
-  const [product, setProduct] = useState(() => {
-    if (typeof window === "undefined") return null;
+  useEffect(() => {
+    // Busca no sessionStorage de forma segura no lado do cliente para evitar mismatch de hidratação
     try {
       const cached = sessionStorage.getItem("vallys_products_v2");
       if (cached) {
         const list = JSON.parse(cached);
-        return list.find((p) => p.id === id) || null;
+        const found = list.find((p) => p.id === id);
+        if (found) {
+          setProduct(found);
+          setLoading(false);
+        }
       }
     } catch (e) {}
-    return null;
-  });
 
-  const [relatedProducts, setRelatedProducts] = useState([]);
-  const [loading, setLoading] = useState(!product);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
     async function fetchData() {
-      if (!product) {
-        setLoading(true);
-      }
-      setError(null);
       try {
         const [foundProduct, allProducts] = await Promise.all([
           getProductById(id),
           getProducts(),
         ]);
 
-        if (!foundProduct && !product) {
-          setError("Produto não encontrado.");
-          return;
-        }
-
         if (foundProduct) {
           setProduct(foundProduct);
+        } else if (!product) {
+          setError("Produto não encontrado.");
         }
 
-        // Produtos relacionados: mesma categoria, excluindo o atual
         const currentCat = (foundProduct || product)?.category;
         let cat = currentCat;
         if (cat === "Iogurtes") cat = "Bebidas Lácteas";
 
-        const related = allProducts
-          .filter((p) => {
-            const pCat = p.category === "Iogurtes" ? "Bebidas Lácteas" : p.category;
-            return pCat === cat && p.id !== (foundProduct || product)?.id;
-          })
-          .slice(0, 4);
-
-        setRelatedProducts(related);
+        if (allProducts) {
+          const related = allProducts
+            .filter((p) => {
+              const pCat = p.category === "Iogurtes" ? "Bebidas Lácteas" : p.category;
+              return pCat === cat && p.id !== (foundProduct || product)?.id;
+            })
+            .slice(0, 4);
+          setRelatedProducts(related);
+        }
       } catch (err) {
         if (!product) {
           setError(err.message || "Erro ao carregar produto.");
@@ -74,7 +66,7 @@ export default function ProductDetailPage() {
     }
 
     fetchData();
-  }, [id, product]);
+  }, [id]);
 
   const style = useMemo(
     () => (product ? getCategoryStyle(product.category) : null),
@@ -96,14 +88,19 @@ export default function ProductDetailPage() {
     return match ? match[0] : "#1a2a6c";
   }, [style]);
 
-  // ─── Loading Apenas se não houver produto em cache ─────────────
+  // ─── Loading State (Estrutura idêntica para evitar Mismatch de Hidratação) ───
   if (loading && !product) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-[#1a2a6c]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-sky-200 border-t-[#00b1f4] rounded-full animate-spin" />
-          <p className="text-white font-semibold text-sm">Carregando produto...</p>
+      <main className="min-h-screen bg-[#f5f7ff]">
+        <div className="bg-white border-b border-gray-100 py-4 px-6 max-w-7xl mx-auto">
+          <div className="h-5 w-48 bg-gray-200 rounded animate-pulse" />
         </div>
+        <section className="relative overflow-hidden bg-[#1a2a6c] min-h-[400px] flex items-center justify-center">
+          <div className="flex flex-col items-center gap-4 py-16">
+            <div className="w-12 h-12 border-4 border-sky-200 border-t-[#00b1f4] rounded-full animate-spin" />
+            <p className="text-white font-semibold text-sm">Carregando produto...</p>
+          </div>
+        </section>
       </main>
     );
   }
@@ -139,7 +136,7 @@ export default function ProductDetailPage() {
       ? "Bebida Láctea"
       : product?.category;
 
-  // ─── Página de detalhes (Sem tela branca/piscada no carregamento) ─────────
+  // ─── Página de detalhes ───────────────────────────────────────
   return (
     <main className="min-h-screen bg-[#f5f7ff]">
       {/* ── Breadcrumb ─────────────────────────────────────────── */}
@@ -192,7 +189,7 @@ export default function ProductDetailPage() {
               <motion.div
                 initial={{ x: "-100vw", opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 1.0, ease: [0.25, 1, 0.5, 1] }}
+                transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1] }}
                 className="relative w-full h-full z-10"
               >
                 <Image

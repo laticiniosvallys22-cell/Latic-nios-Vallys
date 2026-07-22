@@ -155,6 +155,7 @@ export default function ProductsPage() {
                           src={cat.includes("Queijo") ? "/icons/queijos.png" : cat.includes("Bebida") || cat.includes("Iogurte") ? "/icons/bebidas.png" : cat.includes("Manteiga") ? "/icons/manteigas.png" : "/logo.png"}
                           alt={`Ícone ${cat}`}
                           fill
+                          sizes="48px"
                           className="object-contain drop-shadow-md"
                         />
                       </div>

@@ -215,6 +215,7 @@ export default function Home() {
                       src={category.includes("Queijo") ? "/icons/queijos.png" : category.includes("Bebida") || category.includes("Iogurte") ? "/icons/bebidas.png" : category.includes("Manteiga") ? "/icons/manteigas.png" : "/logo.png"}
                       alt={`Ícone ${category}`}
                       fill
+                      sizes="96px"
                       className="object-contain drop-shadow-md"
                     />
                   </div>
