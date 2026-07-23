@@ -18,7 +18,7 @@ export default function Template({ children }) {
       key={pathname}
       initial={{ x: "100vw", opacity: 0.95 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+      transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1] }}
       className="w-full min-h-screen overflow-x-hidden"
     >
       {children}
