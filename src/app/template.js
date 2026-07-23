@@ -6,6 +6,13 @@ import { usePathname } from "next/navigation";
 export default function Template({ children }) {
   const pathname = usePathname();
 
+  // Desativa o slide lateral global na página de detalhes do produto (/produtos/[id])
+  const isProductDetail = pathname.startsWith("/produtos/") && pathname !== "/produtos";
+
+  if (isProductDetail) {
+    return <>{children}</>;
+  }
+
   return (
     <motion.div
       key={pathname}
