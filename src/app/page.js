@@ -71,30 +71,26 @@ export default function Home() {
     return highlights.length > 0 ? highlights : demoHighlights;
   }, [highlights]);
 
-  const [expandedCategories, setExpandedCategories] = useState({
-    "Bebidas Lácteas": true,
-  });
+  const [expandedCategories, setExpandedCategories] = useState({});
 
   useEffect(() => {
     if (products.length > 0) {
-      const initial = { "Bebidas Lácteas": true };
+      const initial = {};
       products.forEach((product) => {
         let cat = product.category || "Outros";
         if (cat === "Iogurtes") {
           cat = "Bebidas Lácteas";
         }
-        if (initial[cat] === undefined) {
-          initial[cat] = cat === "Bebidas Lácteas";
-        }
+        initial[cat] = true;
       });
-      setExpandedCategories(initial);
+      setExpandedCategories((prev) => ({ ...initial, ...prev }));
     }
   }, [products]);
 
   const toggleCategory = (category) => {
     setExpandedCategories((prev) => ({
       ...prev,
-      [category]: !prev[category],
+      [category]: prev[category] !== undefined ? !prev[category] : false,
     }));
   };
 
@@ -201,7 +197,7 @@ export default function Home() {
           Object.entries(productsByCategory)
             .filter(([category]) => productCategories.includes(category))
             .map(([category, items]) => {
-              const isExpanded = !!expandedCategories[category];
+              const isExpanded = expandedCategories[category] !== false;
               const style = getCategoryStyle(category);
             return (
               <div key={category} className="mb-16">
